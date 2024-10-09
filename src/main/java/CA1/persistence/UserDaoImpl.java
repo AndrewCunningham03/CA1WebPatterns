@@ -1,6 +1,6 @@
-package persistence;
+package CA1.persistence;
 
-import business.Users;
+import CA1.business.Users;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

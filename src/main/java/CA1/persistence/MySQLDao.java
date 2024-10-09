@@ -1,4 +1,4 @@
-package persistence;
+package CA1.persistence;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,4 +66,5 @@ public class MySQLDao {
             System.exit(1);
         }
     }
+
 }

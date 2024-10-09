@@ -1,6 +1,6 @@
-package persistence;
+package CA1.persistence;
 
-import business.Users;
+import CA1.business.Users;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
