@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class MySQLDao {
     private Properties properties;
-    private String databaseName = "classicmodels";
+    private String databaseName = "music";
 
     public MySQLDao(){
     }
