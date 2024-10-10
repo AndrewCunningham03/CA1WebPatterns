@@ -1,8 +1,7 @@
 package CA1.business;
 
 public class PlaylistSong {
-//playlistName varchar(50) NOT NULL,
-//    songName     varchar(50) NOT NULL,
+
     private String playlistName;
     private String songName;
 
