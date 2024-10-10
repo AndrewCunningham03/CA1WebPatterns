@@ -4,16 +4,6 @@ import java.sql.Time;
 import java.util.Objects;
 
 public class Songs {
-    //CREATE TABLE songs
-    //(
-    //    songName   varchar(50) NOT NULL,
-    //    albumName  varchar(50) NOT NULL,
-    //    artistName varchar(50) NOT NULL,
-    //    songLength Time,
-    //    PRIMARY KEY (songName),
-    //    FOREIGN KEY (albumName) REFERENCES album (albumName),
-    //    FOREIGN KEY (artistName) REFERENCES artist (artistName)
-    //);
     private String songName;
     private String albumName;
     private String artistName;
