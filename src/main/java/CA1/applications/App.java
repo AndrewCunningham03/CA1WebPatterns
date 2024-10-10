@@ -65,11 +65,12 @@ public class App {
 
                         if (matchfound){
                             System.out.println("Correct card details");
-                            repeat = true;
-                        }else{
                             repeat = false;
+                        }else{
+
                             System.out.println("Enter card details again: ");
                             keyboard.next();
+                            repeat = true;
                         }
                     }
 
