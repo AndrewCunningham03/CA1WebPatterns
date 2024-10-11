@@ -51,14 +51,21 @@ public class Playlist {
     public boolean addSong(Songs song){
         if(!playlist.contains(song)){
             playlist.add(song);
+            numberOfSongs++;
             return true;
         }
         return false;
     }
     public boolean deleteSong(String songName){
+        for(Songs song : playlist){
+            if(song.getSongName().equalsIgnoreCase(songName)){
+                playlist.remove(song);
+                numberOfSongs--;
+                return true;
+            }
+        }
         return false;
     }
-
     @Override
     public String toString() {
         return "Playlist{" +
