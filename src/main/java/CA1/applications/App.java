@@ -1,10 +1,7 @@
 package CA1.applications;
 
 import CA1.business.Artist;
-import CA1.persistence.ArtistDao;
-import CA1.persistence.ArtistDaoImpl;
-import CA1.persistence.UserDao;
-import CA1.persistence.UserDaoImpl;
+import CA1.persistence.*;
 
 
 import java.security.NoSuchAlgorithmException;
@@ -145,15 +142,73 @@ public class App {
                     System.out.println("");
                     break;
                 case 3:
+                    System.out.println("");
                     break;
                 case 4:
+                    System.out.println("");
                     break;
                 case 5:
+                    System.out.println("");
                     break;
                 case 6:
                     break;
             }
         }
+
+
+
+
+        int num3 = 0;
+
+        RatingDao  ratingDao = new RatingDaoImpl("database.properties");
+
+
+        while(num3 != 5){
+            String [] array3 = new String[5];
+
+            array3[0] = "1. Rate a song from 1-5";
+            array3[1] = "2. View all songs you have rated and their rating";
+            array3[2] = "3. Get top rated song";
+            array3[3] = "4. Get the most popular song";
+            array3[4] = "5. Exit";
+
+            for (int i = 0; i < array3.length; i++) {
+                System.out.println(array3[i]);
+            }
+
+            System.out.println("Enter number: ");
+            num3 = keyboard.nextInt();
+
+            if (num3 <= 0 || num3 > array3.length) {
+                System.out.println("Number is not on menu");
+            }
+
+            switch (num3){
+
+                case 1:
+
+                    System.out.println(ratingDao.implementRatingSong(ratingDao.rateSong()));
+
+                    break;
+                case 2 :
+
+                    System.out.println(ratingDao.getAllRatedSongsAndRating());
+                    break;
+                case 3:
+
+                    System.out.println(ratingDao.getTopRatedSong());
+                    break;
+                case 4:
+
+                    System.out.println(ratingDao.getMostPopularSong());
+                    break;
+                case 5:
+                    break;
+
+            }
+        }
+
+
 
     }
 }
