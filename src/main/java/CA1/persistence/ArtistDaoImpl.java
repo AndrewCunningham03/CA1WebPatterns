@@ -45,6 +45,9 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
                     "statement.");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
         }
 
         return artist;

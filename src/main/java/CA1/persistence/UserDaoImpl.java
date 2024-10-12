@@ -119,6 +119,9 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
                     "statement.");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
         }
 
 

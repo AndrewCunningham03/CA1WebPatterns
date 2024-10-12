@@ -117,6 +117,9 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
                     "statement.");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
         }
 
         return rating;
@@ -149,6 +152,9 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
             System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
         }
         return rating;
     }
@@ -181,6 +187,9 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
             System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
         }
         return rating;
     }
