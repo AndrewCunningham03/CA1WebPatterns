@@ -40,7 +40,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
         while(!repeat){
 
-             System.out.println("Please enter the email with @gmail.com at the end:");
+             System.out.println("Please enter the email with any letter or number before the @ symbol and after the @symbol :");
              email = input.nextLine();
 
             Pattern pattern = Pattern.compile("^(.+)@(.+)$");
