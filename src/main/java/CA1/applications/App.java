@@ -105,6 +105,8 @@ public class App {
  */
 
 
+
+/*
         int num2 = 0;
 
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
@@ -174,6 +176,8 @@ public class App {
         }
 
 
+
+ */
 
 
         int num3 = 0;

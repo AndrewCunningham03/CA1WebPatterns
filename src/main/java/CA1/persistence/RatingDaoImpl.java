@@ -42,17 +42,18 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
 
         while(!repeat){
 
+            System.out.println("Enter song rating: ");
+            rating = keyboard.nextInt();
+
             if (rating >=1 && rating <= 5){
-                repeat = false;
-            }else{
-                System.out.println("Number has to be between 1 - 5");
+
+                System.out.println("Thank you for the rating ");
                 repeat = true;
+            }else{
+                System.out.println("Number has to be between 1 - 5: ");
+                repeat = false;
             }
         }
-
-         System.out.println("Enter song rating: ");
-          rating = keyboard.nextInt();
-
 
 
         return new Rating(username,songName,rating);
