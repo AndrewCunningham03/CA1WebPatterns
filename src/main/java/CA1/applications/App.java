@@ -1,5 +1,6 @@
 package CA1.applications;
 
+import CA1.business.Album;
 import CA1.business.Artist;
 import CA1.persistence.*;
 
@@ -7,6 +8,7 @@ import CA1.persistence.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +20,7 @@ public class App {
         Scanner keyboard = new Scanner(System.in);
 
 
-
+/*
         UserDao userDao = new UserDaoImpl("database.properties");
 
         /// login and register
@@ -99,9 +101,14 @@ public class App {
         }
 
 
+
+ */
+
+
         int num2 = 0;
 
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
+        AlbumDao albumDao = new AlbumDaoImpl("database.properties");
 
         while(num2 != 7){
             String [] array2 = new String[7];
@@ -139,7 +146,18 @@ public class App {
                     break;
                 case 2 :
 
-                    System.out.println("");
+                    String artistName;
+                    System.out.println("Enter artistName: ");
+
+
+                    keyboard.nextLine();
+                    artistName = keyboard.nextLine();
+                    System.out.println(artistName);
+
+                    List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistName);
+
+                    System.out.println(albums);
+
                     break;
                 case 3:
                     System.out.println("");
