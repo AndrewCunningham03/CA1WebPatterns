@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserDaoImpl extends MySQLDao implements UserDao{
 
@@ -32,13 +34,31 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         System.out.println("Please enter the username:");
         String userName = input.nextLine();
 
-        System.out.println("Please enter the email:");
-        String email = input.nextLine();
+        String email = null;
+
+        boolean repeat = false;
+
+        while(!repeat){
+
+             System.out.println("Please enter the email with @gmail.com at the end:");
+             email = input.nextLine();
+
+            Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+            Matcher match = pattern.matcher(email);
+            boolean matchfound = match.find();
+
+            if (matchfound){
+                System.out.println("Correct email details");
+                repeat = true;
+            }else{
+
+                System.out.println("Enter email details again ");
+                repeat = false;
+            }
+        }
 
         System.out.println("Please enter the password:");
         String password = input.nextLine();
-
-
 
         System.out.println("Please enter the userType");
         int userType = input.nextInt();
