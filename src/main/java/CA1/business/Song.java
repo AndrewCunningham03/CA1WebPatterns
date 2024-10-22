@@ -3,7 +3,7 @@ package CA1.business;
 import java.sql.Time;
 import java.util.Objects;
 
-public class Songs {
+public class Song {
 
     private int songID;
     private String songName;
@@ -11,7 +11,7 @@ public class Songs {
     private int artistID;
     private Time songLength;
 
-    public Songs(int songID, String songName, int albumID, int artistID, Time songLength) {
+    public Song(int songID, String songName, int albumID, int artistID, Time songLength) {
         this.songID = songID;
         this.songName = songName;
         this.albumID = albumID;
@@ -63,7 +63,7 @@ public class Songs {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Songs songs = (Songs) o;
+        Song songs = (Song) o;
         return songID == songs.songID && albumID == songs.albumID && artistID == songs.artistID && Objects.equals(songName, songs.songName) && Objects.equals(songLength, songs.songLength);
     }
 

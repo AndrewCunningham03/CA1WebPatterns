@@ -10,9 +10,9 @@ public class Playlist {
     private String username;
     private int numberOfSongs;
     private boolean statusPrivate;
-    private ArrayList<Songs> playlist;
+    private ArrayList<Song> playlist;
 
-    public Playlist(int privateID, String playlistName, String username, int numberOfSongs, boolean statusPrivate, ArrayList<Songs> playlist) {
+    public Playlist(int privateID, String playlistName, String username, int numberOfSongs, boolean statusPrivate, ArrayList<Song> playlist) {
         this.privateID = privateID;
         this.playlistName = playlistName;
         this.username = username;
@@ -61,11 +61,11 @@ public class Playlist {
         this.statusPrivate = statusPrivate;
     }
 
-    public ArrayList<Songs> getPlaylist() {
+    public ArrayList<Song> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(ArrayList<Songs> playlist) {
+    public void setPlaylist(ArrayList<Song> playlist) {
         this.playlist = playlist;
     }
 

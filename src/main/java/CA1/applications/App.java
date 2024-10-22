@@ -2,6 +2,7 @@ package CA1.applications;
 
 import CA1.business.Album;
 import CA1.business.Artist;
+import CA1.business.Song;
 import CA1.persistence.*;
 
 
@@ -111,8 +112,8 @@ public class App {
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         AlbumDao albumDao = new AlbumDaoImpl("database.properties");
 
-        while(num2 != 10){
-            String [] array2 = new String[10];
+        while(num2 != 11){
+            String [] array2 = new String[11];
 
             array2[0] = "1. View all artist in the library";
             array2[1] = "2. Search for artist by artistID";
@@ -120,10 +121,11 @@ public class App {
             array2[3] = "4. Search for album by albumID";
             array2[4] = "5. View all albums in the library";
             array2[5] = "6. View all songs in an album";
-            array2[6] = "7. Search for song by title";
+            array2[6] = "7. Search for song by songID";
             array2[7] = "8. Search for song by artist";
             array2[8] = "9. Search for song by album";
-            array2[9] = "10. Exit";
+            array2[9] = "10. Search for song by title";
+            array2[10] = "11. Exit";
 
             for (int i = 0; i < array2.length; i++) {
                 System.out.println(array2[i]);
@@ -186,6 +188,14 @@ public class App {
 
                     break;
                 case 6:
+
+                    SongDao songDao = new SongDaoImpl("database.properties");
+
+                    int songID;
+                    System.out.println("Enter songID: ");
+                    songID = keyboard.nextInt();
+
+                    System.out.println(songDao.findSongById(songID));
                     break;
                 case 7:
                     System.out.println("");
@@ -195,6 +205,11 @@ public class App {
                     break;
                 case 9:
                     System.out.println("");
+                    break;
+                case 10:
+                    System.out.println("");
+                    break;
+                case 11:
                     break;
             }
         }
