@@ -19,64 +19,70 @@ CREATE TABLE users
 
 CREATE TABLE artist
 (
+    artistID    int(255)    NOT NULL,
     artistName  varchar(50) NOT NULL,
     genre       varchar(50) NOT NULL,
     hometown    varchar(50) NOT NULL,
     dateOfBirth DATE,
-    PRIMARY KEY (artistName)
+    PRIMARY KEY (artistID)
 );
 
 
 CREATE TABLE album
 (
-    albumName     varchar(50) NOT NULL,
-    artistName    varchar(50) NOT NULL,
+    albumID       int(255) NOT NULL,
+    albumName     varchar(255) NOT NULL,
+    artistID      int (255) NOT NULL,
     numberOfSongs int(50) NOT NULL,
     releaseDate   DATE,
     albumLength   Time,
-    PRIMARY KEY (albumName),
-    FOREIGN KEY (artistName) REFERENCES artist (artistName)
+    PRIMARY KEY (albumID),
+    FOREIGN KEY (artistID) REFERENCES artist (artistID)
 );
 
 
 
 CREATE TABLE songs
 (
+    songID     int(255)    NOT NULL,
     songName   varchar(50) NOT NULL,
-    albumName  varchar(50) NOT NULL,
-    artistName varchar(50) NOT NULL,
+    albumID    int(255) NOT NULL,
+    artistID   int(255) NOT NULL,
     songLength Time,
-    PRIMARY KEY (songName),
-    FOREIGN KEY (albumName) REFERENCES album (albumName),
-    FOREIGN KEY (artistName) REFERENCES artist (artistName)
+    PRIMARY KEY (songID),
+    FOREIGN KEY (albumID) REFERENCES album (albumID),
+    FOREIGN KEY (artistID) REFERENCES artist (artistID)
 );
 
 
 CREATE TABLE playlist
 (
+    playlistID    int(255)  NOT NULL,
     playlistName  varchar(50) NOT NULL,
+    username      varchar(50) NOT NULL,
     numberOfSongs int(50) NOT NULL,
     private       BOOLEAN,
-    PRIMARY KEY (playlistName)
+    PRIMARY KEY (playlistID),
+    FOREIGN KEY (username) REFERENCES users (username)
 );
 
 CREATE TABLE playlistSong
 (
-    playlistName varchar(50) NOT NULL,
-    songName     varchar(50) NOT NULL,
-    PRIMARY KEY (playlistName, songName),
-    FOREIGN KEY (playlistName) REFERENCES playlist (playlistName),
-    FOREIGN KEY (songName) REFERENCES songs (songName)
+    playlistID   int(255) NOT NULL,
+    songID       int(255) NOT NULL,
+    PRIMARY KEY (playlistID, songID),
+    FOREIGN KEY (playlistID) REFERENCES playlist (playlistID),
+    FOREIGN KEY (songID) REFERENCES songs (songID)
 );
 
 CREATE TABLE rating
 (
     username varchar(50) NOT NULL,
-    songName varchar(50) NOT NULL,
-    rating   int         NOT NULL,
-    PRIMARY KEY (username, songName),
+    songID  int(255) NOT NULL,
+    userRating   double NOT NULL,
+    PRIMARY KEY (username, songID),
     FOREIGN KEY (username) REFERENCES users (username),
-    FOREIGN KEY (songName) REFERENCES songs (songName)
+    FOREIGN KEY (songID) REFERENCES songs (songID)
 );
 
 
