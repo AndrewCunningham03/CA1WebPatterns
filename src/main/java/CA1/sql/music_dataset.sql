@@ -27,7 +27,7 @@ VALUES (1, 'Come on', 1, 1, '00:04:59'),
        (4, 'Housequake', 2, 5, '00:03:32'),
        (5, 'A.D.2000', 3, 4, '00:05:23');
 
-INSERT INTO `playlist` (`playlistID`,`playlistName`, `userName`,`numberOfSongs`, `private`)
+INSERT INTO `playlist` (`playlistID`,`playlistName`, `userName`,`numberOfSongs`, `statusPrivate`)
 VALUES (1, 'Rap Cavier', 'Toby', 50, FALSE),
        (2, 'best rnb playlist', 'Sam', 25, TRUE),
        (3, 'Happy Place', 'John', 100, TRUE),
