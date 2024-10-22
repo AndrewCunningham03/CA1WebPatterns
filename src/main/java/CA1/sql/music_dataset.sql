@@ -7,7 +7,7 @@ VALUES ('Toby', 'toby@gmail.com', 'ron', 1),
 
 INSERT INTO `artist` (`artistID`, `artistName`, `genre`, `hometown`, `dateOfBirth`)
 VALUES (1, 'Jimi Hendrix', 'Rock', 'Seattle Washington', '1942-09-27'),
-       (2, 'Kendrick Lamar', 'Hip Hop', 'Compton, California', '1987-06-17'),
+       (2, 'Kendrick Lamar', 'Hip Hop', 'Compton California', '1987-06-17'),
        (3, 'Playboi Carti', 'Hip Hop', 'Riverdale Georgia', '1995-09-13'),
        (4, 'Erykah Badu', 'RnB/Soul', 'Dallas Texas', '1971-02-26'),
        (5, 'Prince', 'RnB/Soul', 'Minneapolis, Minnesota', '1958-06-7');

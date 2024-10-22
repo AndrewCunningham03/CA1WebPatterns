@@ -103,7 +103,7 @@ public class App {
 
 
 
-/*
+
         int num2 = 0;
 
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
@@ -145,15 +145,15 @@ public class App {
                     break;
                 case 2 :
 
-                    String artistName;
-                    System.out.println("Enter artistName: ");
+                    int artistID;
+                    System.out.println("Enter artistID: ");
 
 
-                    keyboard.nextLine();
-                    artistName = keyboard.nextLine();
-                    System.out.println(artistName);
+                   // keyboard.nextLine();
+                    artistID = keyboard.nextInt();
+                    System.out.println(artistID);
 
-                    List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistName);
+                    List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistID);
 
                     System.out.println(albums);
 
@@ -174,7 +174,6 @@ public class App {
 
 
 
- */
 
 
         int num3 = 0;
