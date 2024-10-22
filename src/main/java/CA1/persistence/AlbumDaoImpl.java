@@ -22,15 +22,15 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
     }
 
     @Override
-    public List<Album> viewAllAlbumsFromArtist(String artistName){
+    public List<Album> viewAllAlbumsFromArtist(int artistID){
 
         List<Album> album = new ArrayList<>();
 
         Connection conn = super.getConnection();
 
-        try(PreparedStatement ps = conn.prepareStatement("SELECT * from album where artistName = ?")){
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * from album where artistID = ?")){
 
-            ps.setString(1, artistName);
+            ps.setInt(1, artistID);
 
             try(ResultSet rs = ps.executeQuery()){
                 while(rs.next()){

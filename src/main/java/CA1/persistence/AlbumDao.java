@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface AlbumDao {
-    public List<Album> viewAllAlbumsFromArtist(String artistName);
+    public List<Album> viewAllAlbumsFromArtist(int artistName);
 }
