@@ -63,8 +63,9 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
         Album a = new Album(
 
+                rs.getInt("albumID"),
                 rs.getString("albumName"),
-                rs.getString("artistName"),
+                rs.getInt("artistID"),
                 rs.getInt("numberOfSongs"),
                 rs.getDate("releaseDate"),
                 rs.getTime("albumLength")

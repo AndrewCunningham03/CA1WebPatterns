@@ -172,4 +172,9 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
     }
 
+
+    //refernce
+
+    // HowToDoItInJava - Java Email Validation using Regex - https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
+
 }

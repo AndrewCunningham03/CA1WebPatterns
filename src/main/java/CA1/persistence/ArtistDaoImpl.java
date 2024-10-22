@@ -57,6 +57,7 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
 
         Artist a = new Artist(
 
+                rs.getInt("artistID"),
                 rs.getString("artistName"),
                 rs.getString("genre"),
                 rs.getString("hometown"),

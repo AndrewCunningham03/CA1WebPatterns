@@ -32,18 +32,18 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         System.out.println("Enter username: ");
         String username = keyboard.nextLine();
 
-        System.out.println("Enter song name");
-        String songName = keyboard.nextLine();
+        System.out.println("Enter songID");
+        int songID = keyboard.nextInt();
 
 
-        int rating = 0;
+        double rating = 0;
 
         boolean repeat = false;
 
         while(!repeat){
 
             System.out.println("Enter song rating: ");
-            rating = keyboard.nextInt();
+            rating = keyboard.nextDouble();
 
             if (rating >=1 && rating <= 5){
 
@@ -56,7 +56,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         }
 
 
-        return new Rating(username,songName,rating);
+        return new Rating(username,songID,rating);
     }
 
     @Override
@@ -69,9 +69,9 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         try(PreparedStatement ps = conn.prepareStatement("insert into rating values(?, ?, " +
                 "?)")) {
             // Fill in the blanks, i.e. parameterize the update
-            ps.setString(1, rating.getUserName());
-            ps.setString(2, rating.getSongName());
-            ps.setInt(3, rating.getRating());
+            ps.setString(1, rating.getUsername());
+            ps.setInt(2, rating.getSongID());
+            ps.setDouble(3, rating.getUserRating ());
 
             rowsAffected = ps.executeUpdate();
         }
@@ -127,22 +127,22 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
     @Override
-    public Rating getTopRatedSong(){
+    public int getTopRatedSong(){
 
-        Rating rating = null;
+        int rating = 0;
 
         // Get a connection using the superclass
         Connection conn = super.getConnection();
         // TRY to get a statement from the connection
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * from rating where rating = (Select MAX(rating) from rating)")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT songID from rating GROUP BY songID ORDER BY AVG(userRating) DESC LIMIT 1")) {
             // TRY to execute the query
             try (ResultSet rs = ps.executeQuery()) {
                 // Extract the information from the result set
                 // Use extraction method to avoid code repetition!
                 if (rs.next()) {
-                    rating = mapRow(rs);
+                    rating = mapRow1(rs);
                 }
             } catch (SQLException e) {
                 System.out.println("SQL Exception occurred when executing SQL or processing results.");
@@ -162,22 +162,22 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
 
 
     @Override
-    public Rating getMostPopularSong(){
+    public int getMostPopularSong(){
 
-        Rating rating = null;
+        int rating = 0;
 
         // Get a connection using the superclass
         Connection conn = super.getConnection();
         // TRY to get a statement from the connection
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * from rating GROUP BY songName ORDER BY COUNT(*) DESC LIMIT 1")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT songID from rating GROUP BY songID ORDER BY COUNT(*) DESC LIMIT 1")) {
             // TRY to execute the query
             try (ResultSet rs = ps.executeQuery()) {
                 // Extract the information from the result set
                 // Use extraction method to avoid code repetition!
                 if (rs.next()) {
-                    rating = mapRow(rs);
+                    rating = mapRow1(rs);
                 }
             } catch (SQLException e) {
                 System.out.println("SQL Exception occurred when executing SQL or processing results.");
@@ -199,9 +199,15 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         Rating r = new Rating(
 
                 rs.getString("username"),
-                rs.getString("songName"),
-                rs.getInt("rating")
+                rs.getInt("songID"),
+                rs.getDouble("userRating")
         );
+        return r;
+    }
+
+    private int mapRow1(ResultSet rs)throws SQLException {
+
+        int r =  rs.getInt("songID");
         return r;
     }
 }

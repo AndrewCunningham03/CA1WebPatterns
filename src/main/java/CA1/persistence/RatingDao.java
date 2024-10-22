@@ -11,7 +11,7 @@ public interface RatingDao {
 
     public ArrayList<Rating> getAllRatedSongsAndRating();
 
-    public Rating getTopRatedSong();
+    public int getTopRatedSong();
 
-    public Rating getMostPopularSong();
+    public int getMostPopularSong();
 }
