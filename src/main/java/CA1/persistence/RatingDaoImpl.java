@@ -2,6 +2,7 @@ package CA1.persistence;
 
 import CA1.business.Artist;
 import CA1.business.Rating;
+import CA1.business.Song;
 import CA1.business.Users;
 
 
@@ -127,9 +128,13 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
     @Override
-    public int getTopRatedSong(){
+    public Song getTopRatedSong(){
+
+
+        SongDao songDao = new SongDaoImpl("database.properties");
 
         int rating = 0;
+
 
         // Get a connection using the superclass
         Connection conn = super.getConnection();
@@ -141,9 +146,11 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
             try (ResultSet rs = ps.executeQuery()) {
                 // Extract the information from the result set
                 // Use extraction method to avoid code repetition!
+
                 if (rs.next()) {
                     rating = mapRow1(rs);
                 }
+
             } catch (SQLException e) {
                 System.out.println("SQL Exception occurred when executing SQL or processing results.");
                 System.out.println("Error: " + e.getMessage());
@@ -157,13 +164,16 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
             // Close the connection using the superclass method
             super.freeConnection(conn);
         }
-        return rating;
+
+
+        return songDao.findSongById(rating);
     }
 
 
     @Override
-    public int getMostPopularSong(){
+    public Song getMostPopularSong(){
 
+        SongDao songDao = new SongDaoImpl("database.properties");
         int rating = 0;
 
         // Get a connection using the superclass
@@ -192,7 +202,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
             // Close the connection using the superclass method
             super.freeConnection(conn);
         }
-        return rating;
+        return songDao.findSongById(rating);
     }
     private Rating mapRow(ResultSet rs)throws SQLException {
 
@@ -210,6 +220,20 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         int r =  rs.getInt("songID");
         return r;
     }
+
+    private Song mapRowSong(ResultSet rs)throws SQLException {
+
+        Song s = new Song(
+
+                rs.getInt("songID"),
+                rs.getString("songName"),
+                rs.getInt("albumID"),
+                rs.getInt("artistID"),
+                rs.getTime("songLength")
+        );
+        return s;
+    }
+
 }
 
 

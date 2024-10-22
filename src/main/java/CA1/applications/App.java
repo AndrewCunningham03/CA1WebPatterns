@@ -218,6 +218,9 @@ public class App {
 
 
 
+
+
+
         int num3 = 0;
 
         RatingDao  ratingDao = new RatingDaoImpl("database.properties");

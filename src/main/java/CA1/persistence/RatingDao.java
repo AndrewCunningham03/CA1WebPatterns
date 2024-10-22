@@ -1,6 +1,7 @@
 package CA1.persistence;
 
 import CA1.business.Rating;
+import CA1.business.Song;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public interface RatingDao {
 
     public ArrayList<Rating> getAllRatedSongsAndRating();
 
-    public int getTopRatedSong();
+    public Song getTopRatedSong();
 
-    public int getMostPopularSong();
+    public Song getMostPopularSong();
 }
