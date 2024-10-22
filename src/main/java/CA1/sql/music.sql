@@ -60,7 +60,7 @@ CREATE TABLE playlist
     playlistID    int(255)  NOT NULL,
     playlistName  varchar(50) NOT NULL,
     username      varchar(50) NOT NULL,
-    statusPrivate       BOOLEAN,
+    statusPrivate  BOOLEAN,
     PRIMARY KEY (playlistID),
     FOREIGN KEY (username) REFERENCES users (username)
 );

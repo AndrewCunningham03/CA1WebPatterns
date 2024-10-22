@@ -19,7 +19,7 @@ class ArtistDaoImplTest {
     void getAllArtist() {
         System.out.println("Get all the artist");
 
-        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
+        ArtistDao artistDao = new ArtistDaoImpl("database_test.properties");
 
         List<Artist> expected = generateAllResults();
         List<Artist> result  = artistDao.getAllArtist();

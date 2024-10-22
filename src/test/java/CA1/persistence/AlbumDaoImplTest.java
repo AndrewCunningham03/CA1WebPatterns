@@ -23,7 +23,7 @@ class AlbumDaoImplTest {
 
         System.out.println("Test for Viewing all albums from a particular artist");
         System.out.println("");
-        AlbumDao albumDao = new AlbumDaoImpl("database.properties");
+        AlbumDao albumDao = new AlbumDaoImpl("database_test.properties");
 
         List<Album> expected = generateAllResults();
         List<Album> result = albumDao.viewAllAlbumsFromArtist(1);
