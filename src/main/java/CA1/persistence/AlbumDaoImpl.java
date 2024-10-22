@@ -59,6 +59,84 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
     }
 
 
+    // getAlbumBasedOnAlbumID
+
+    @Override
+    public Album findAlbumById(int albumID){
+
+        Album album = null;
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM album where albumID = ?")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setInt(1, albumID);
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                if(rs.next()){
+
+                    album = mapRow(rs);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return album;
+    }
+
+
+    // getAllAlbums
+
+    @Override
+    public ArrayList<Album> getAllAlbums() {
+        // Create variable to hold the customer info from the database
+        ArrayList<Album> albums = new ArrayList<>();
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // Get a statement from the connection
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM album")) {
+            // Execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Repeatedly try to get a customer from the resultset
+                while(rs.next()){
+                    Album a = mapRow(rs);
+                    albums.add(a);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+
+        return albums;
+    }
+
+
     private Album mapRow(ResultSet rs)throws SQLException{
 
         Album a = new Album(

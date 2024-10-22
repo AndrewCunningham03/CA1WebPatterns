@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface AlbumDao {
     public List<Album> viewAllAlbumsFromArtist(int artistName);
+    public Album findAlbumById(int albumID);
+
+    public ArrayList<Album> getAllAlbums();
+
 }
