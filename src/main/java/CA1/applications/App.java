@@ -104,21 +104,26 @@ public class App {
 
 
 
+
+
         int num2 = 0;
 
         ArtistDao artistDao = new ArtistDaoImpl("database.properties");
         AlbumDao albumDao = new AlbumDaoImpl("database.properties");
 
-        while(num2 != 7){
-            String [] array2 = new String[7];
+        while(num2 != 10){
+            String [] array2 = new String[10];
 
             array2[0] = "1. View all artist in the library";
-            array2[1] = "2. View all albums for an artist";
-            array2[2] = "3. View all songs in an album";
-            array2[3] = "4. Search for song by title";
-            array2[4] = "5. Search for song by artist";
-            array2[5] = "6. Search for song by album";
-            array2[6] = "7. Exit";
+            array2[1] = "2. Search for artist by artistID";
+            array2[2] = "3. View all albums for an artist";
+            array2[3] = "4. Search for album by albumID";
+            array2[4] = "5. View all albums in the library";
+            array2[5] = "6. View all songs in an album";
+            array2[6] = "7. Search for song by title";
+            array2[7] = "8. Search for song by artist";
+            array2[8] = "9. Search for song by album";
+            array2[9] = "10. Exit";
 
             for (int i = 0; i < array2.length; i++) {
                 System.out.println(array2[i]);
@@ -141,15 +146,21 @@ public class App {
                         System.out.println("Artist: " +a);
                     }
 
-                    System.out.println("");
+
                     break;
                 case 2 :
 
+                   int artistID2;
+                   System.out.println("Enter artistID");
+                   artistID2 = keyboard.nextInt();
+
+                    System.out.println(artistDao.findArtistById(artistID2));
+
+                    break;
+                case 3:
+
                     int artistID;
                     System.out.println("Enter artistID: ");
-
-
-                   // keyboard.nextLine();
                     artistID = keyboard.nextInt();
                     System.out.println(artistID);
 
@@ -158,16 +169,32 @@ public class App {
                     System.out.println(albums);
 
                     break;
-                case 3:
-                    System.out.println("");
-                    break;
                 case 4:
-                    System.out.println("");
+                    int albumID;
+                    System.out.println("Enter albumID: ");
+                    albumID = keyboard.nextInt();
+
+                    System.out.println(albumDao.findAlbumById(albumID));
+
                     break;
                 case 5:
-                    System.out.println("");
+                    ArrayList<Album> albums4 = albumDao.getAllAlbums();
+
+                    for (Album a: albums4){
+                        System.out.println("Artist: " +a);
+                    }
+
                     break;
                 case 6:
+                    break;
+                case 7:
+                    System.out.println("");
+                    break;
+                case 8:
+                    System.out.println("");
+                    break;
+                case 9:
+                    System.out.println("");
                     break;
             }
         }
