@@ -8,18 +8,17 @@ public class Playlist {
     private int privateID;
     private String playlistName;
     private String username;
-    private int numberOfSongs;
     private boolean statusPrivate;
     private ArrayList<Song> playlist;
 
-    public Playlist(int privateID, String playlistName, String username, int numberOfSongs, boolean statusPrivate, ArrayList<Song> playlist) {
+    public Playlist(int privateID, String playlistName, String username, boolean statusPrivate, ArrayList<Song> playlist) {
         this.privateID = privateID;
         this.playlistName = playlistName;
         this.username = username;
-        this.numberOfSongs = numberOfSongs;
         this.statusPrivate = statusPrivate;
         this.playlist = playlist;
     }
+
 
     public int getPrivateID() {
         return privateID;
@@ -45,14 +44,6 @@ public class Playlist {
         this.username = username;
     }
 
-    public int getNumberOfSongs() {
-        return numberOfSongs;
-    }
-
-    public void setNumberOfSongs(int numberOfSongs) {
-        this.numberOfSongs = numberOfSongs;
-    }
-
     public boolean isStatusPrivate() {
         return statusPrivate;
     }
@@ -74,12 +65,12 @@ public class Playlist {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Playlist playlist1 = (Playlist) o;
-        return privateID == playlist1.privateID && numberOfSongs == playlist1.numberOfSongs && statusPrivate == playlist1.statusPrivate && Objects.equals(playlistName, playlist1.playlistName) && Objects.equals(username, playlist1.username) && Objects.equals(playlist, playlist1.playlist);
+        return privateID == playlist1.privateID && statusPrivate == playlist1.statusPrivate && Objects.equals(playlistName, playlist1.playlistName) && Objects.equals(username, playlist1.username) && Objects.equals(playlist, playlist1.playlist);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(privateID, playlistName, username, numberOfSongs, statusPrivate, playlist);
+        return Objects.hash(privateID, playlistName, username, statusPrivate, playlist);
     }
 
     @Override
@@ -88,7 +79,6 @@ public class Playlist {
                 "privateID=" + privateID +
                 ", playlistName='" + playlistName + '\'' +
                 ", username='" + username + '\'' +
-                ", numberOfSongs=" + numberOfSongs +
                 ", statusPrivate=" + statusPrivate +
                 ", playlist=" + playlist +
                 '}';
