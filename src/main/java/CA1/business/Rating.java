@@ -1,46 +1,61 @@
 package CA1.business;
 
+import java.util.Objects;
+
 public class Rating {
     private String username;
-    private String songName;
-    private int rating;
+    private int songID;
+    private double userRating ;
 
-    public Rating(String username, String songName, int rating) {
+    public Rating(String username, int songID, double userRating) {
         this.username = username;
-        this.songName = songName;
-        this.rating = rating;
+        this.songID = songID;
+        this.userRating = userRating;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getSongName() {
-        return songName;
+    public int getSongID() {
+        return songID;
     }
 
-    public void setSongName(String songName) {
-        this.songName = songName;
+    public void setSongID(int songID) {
+        this.songID = songID;
     }
 
-    public int getRating() {
-        return rating;
+    public double getUserRating() {
+        return userRating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setUserRating(double userRating) {
+        this.userRating = userRating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rating rating = (Rating) o;
+        return songID == rating.songID && Double.compare(userRating, rating.userRating) == 0 && Objects.equals(username, rating.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, songID, userRating);
     }
 
     @Override
     public String toString() {
         return "Rating{" +
-                "userName='" + username + '\'' +
-                ", songName='" + songName + '\'' +
-                ", rating=" + rating +
+                "username='" + username + '\'' +
+                ", songID=" + songID +
+                ", userRating=" + userRating +
                 '}';
     }
 }

@@ -1,36 +1,51 @@
 package CA1.business;
 
+import java.util.Objects;
+
 public class PlaylistSong {
 
-    private String playlistName;
-    private String songName;
+    private int playlistID;
+    private int songID;
 
-    public PlaylistSong(String playlistName, String songName) {
-        this.playlistName = playlistName;
-        this.songName = songName;
+    public PlaylistSong(int playlistID, int songID) {
+        this.playlistID = playlistID;
+        this.songID = songID;
     }
 
-    public String getPlaylistName() {
-        return playlistName;
+    public int getPlaylistID() {
+        return playlistID;
     }
 
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+    public void setPlaylistID(int playlistID) {
+        this.playlistID = playlistID;
     }
 
-    public String getSongName() {
-        return songName;
+    public int getSongID() {
+        return songID;
     }
 
-    public void setSongName(String songName) {
-        this.songName = songName;
+    public void setSongID(int songID) {
+        this.songID = songID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaylistSong that = (PlaylistSong) o;
+        return playlistID == that.playlistID && songID == that.songID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playlistID, songID);
     }
 
     @Override
     public String toString() {
         return "PlaylistSong{" +
-                "playlistName='" + playlistName + '\'' +
-                ", songName='" + songName + '\'' +
+                "playlistID=" + playlistID +
+                ", songID=" + songID +
                 '}';
     }
 }

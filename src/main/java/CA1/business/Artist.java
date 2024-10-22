@@ -5,20 +5,29 @@ import java.util.Objects;
 
 public class Artist {
 
+    private int artistID;
     private String artistName;
     private String genre;
     private String hometown;
     private Date dateOfBirth;
 
-    /// constructors
-    public Artist(String artistName, String genre, String hometown, Date dateOfBirth) {
+    public Artist(int artistID, String artistName, String genre, String hometown, Date dateOfBirth) {
+        this.artistID = artistID;
         this.artistName = artistName;
         this.genre = genre;
         this.hometown = hometown;
         this.dateOfBirth = dateOfBirth;
     }
 
-    /// setters and getters
+
+    public int getArtistID() {
+        return artistID;
+    }
+
+    public void setArtistID(int artistID) {
+        this.artistID = artistID;
+    }
+
     public String getArtistName() {
         return artistName;
     }
@@ -52,29 +61,24 @@ public class Artist {
     }
 
 
-    /// equals and hash
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return Objects.equals(artistName, artist.artistName);
+        return artistID == artist.artistID && Objects.equals(artistName, artist.artistName) && Objects.equals(genre, artist.genre) && Objects.equals(hometown, artist.hometown) && Objects.equals(dateOfBirth, artist.dateOfBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(artistName);
+        return Objects.hash(artistID, artistName, genre, hometown, dateOfBirth);
     }
-
-    /// toString
-
 
     @Override
     public String toString() {
         return "Artist{" +
-                "artistName='" + artistName + '\'' +
+                "artistID=" + artistID +
+                ", artistName='" + artistName + '\'' +
                 ", genre='" + genre + '\'' +
                 ", hometown='" + hometown + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
