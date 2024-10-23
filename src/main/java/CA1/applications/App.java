@@ -20,7 +20,7 @@ public class App {
         Scanner keyboard = new Scanner(System.in);
 
 
-
+        System.out.println();
 
         UserDao userDao = new UserDaoImpl("database.properties");
 
