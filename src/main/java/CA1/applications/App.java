@@ -293,7 +293,7 @@ public class App {
             String [] array3 = new String[5];
 
             array3[0] = "1. Rate a song from 1-5";
-            array3[1] = "2. View all songs you have rated and their rating";
+            array3[1] = "2. View all songs and what song a particular user has rated with the song and rating";
             array3[2] = "3. Get top rated song";
             array3[3] = "4. Get the most popular song";
             array3[4] = "5. Exit";
