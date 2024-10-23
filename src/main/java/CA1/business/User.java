@@ -16,6 +16,16 @@ public class User {
         this.userType = userType;
     }
 
+    public User(User userByEmail){
+        this.username = userByEmail.getUsername();
+        this.email = userByEmail.getEmail();
+        this.password = userByEmail.getPassword();
+        this.userType = userByEmail.getUserType();
+    }
+    public User(){
+
+    }
+
     public String getUsername() {
         return username;
     }

@@ -14,4 +14,6 @@ public interface UserDao {
     public boolean loginUser(String email, String password);
 
     public User findUserByUsername(String username);
+
+    public User findUserByEmail(String email);
 }

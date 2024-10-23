@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 public class App {
 
+    static User user = new User();
+
     public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         Scanner keyboard = new Scanner(System.in);
@@ -89,6 +91,17 @@ public class App {
                     password = keyboard.next();
 
                     System.out.println(result = userDao.loginUser(email,password));
+                    if(result == true){
+
+                        User loggedInUser = new User(userDao.findUserByEmail(email));
+
+                        user = loggedInUser;
+                    }
+
+                    user.getUsername();
+                    user.getEmail();
+                    user.getPassword();
+                    user.getUserType();
                     break;
 
             }
@@ -387,7 +400,12 @@ public class App {
             }
         }
 
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties") {
+            @Override
+            public boolean createNewPlaylist(User user) {
+                return false;
+            }
+        };
         int num4 =0;
         while(num4 != 5){
             String [] array4 = new String[5];
@@ -412,7 +430,7 @@ public class App {
                     }
                     break;
                 case 2 :
-                    //playlistDao.createNewPlaylist();
+                    playlistDao.createNewPlaylist(user);
                     break;
                 case 3:
                     break;

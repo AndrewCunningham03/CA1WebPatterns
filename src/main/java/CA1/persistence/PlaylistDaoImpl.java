@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
+public abstract class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
     public PlaylistDaoImpl(String databaseName){
         super(databaseName);
     }
