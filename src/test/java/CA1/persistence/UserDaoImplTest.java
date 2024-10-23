@@ -1,6 +1,5 @@
 package CA1.persistence;
 
-import CA1.business.Rating;
 import CA1.business.User;
 import org.junit.jupiter.api.Test;
 
