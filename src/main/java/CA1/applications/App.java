@@ -1,9 +1,6 @@
 package CA1.applications;
 
-import CA1.business.Album;
-import CA1.business.Artist;
-import CA1.business.Rating;
-import CA1.business.Song;
+import CA1.business.*;
 import CA1.persistence.*;
 
 
@@ -387,6 +384,42 @@ public class App {
                 case 5:
                     break;
 
+            }
+        }
+
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+        int num4 =0;
+        while(num4 != 5){
+            String [] array4 = new String[5];
+            array4[0] = "1. View all Playlists";
+            array4[1] = "2. Create new Playlist";
+            array4[2] = "3. ";
+            array4[3] = "4. ";
+            array4[4] = "5. Exit";
+            for (int i = 0; i < array4.length; i++) {
+                System.out.println(array4[i]);
+            }
+            System.out.println("Enter number: ");
+            num4 = keyboard.nextInt();
+            if (num4 <= 0 || num4 > array4.length) {
+                System.out.println("Number is not on menu");
+            }
+            switch (num4){
+                case 1:
+                    ArrayList<Playlist> allPlaylists = playlistDao.getAllPlaylists();
+                    for (Playlist p: allPlaylists){
+                        System.out.println("Playlist: " +p);
+                    }
+                    break;
+                case 2 :
+                    //playlistDao.createNewPlaylist();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
             }
         }
 
