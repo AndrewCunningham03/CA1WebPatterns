@@ -1,14 +1,15 @@
 package CA1.applications;
 
-import CA1.business.*;
+import CA1.business.Album;
+import CA1.business.Artist;
+import CA1.business.Rating;
+import CA1.business.Song;
 import CA1.persistence.*;
 
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,9 +21,8 @@ public class App {
 
 
 
+
         UserDao userDao = new UserDaoImpl("database.properties");
-
-
 
         /// login and register
 
@@ -107,10 +107,12 @@ public class App {
 
 
 
+
+
         int num2 = 0;
 
-        ArtistDao artistDao = new ArtistDaoImpl("database.properties");
-        AlbumDao albumDao = new AlbumDaoImpl("database.properties");
+
+     //   AlbumDao albumDao = new AlbumDaoImpl("database.properties");
 
         while(num2 != 11){
             String [] array2 = new String[11];
@@ -142,6 +144,8 @@ public class App {
 
                 case 1:
 
+                    ArtistDao artistDao = new ArtistDaoImpl("database.properties");
+
                     ArrayList<Artist> artists = artistDao.getAllArtist();
 
                     for (Artist a: artists){
@@ -152,35 +156,84 @@ public class App {
                     break;
                 case 2 :
 
-                   int artistID2;
-                   System.out.println("Enter artistID");
-                   artistID2 = keyboard.nextInt();
+                    ArtistDao artistDao1 = new ArtistDaoImpl("database.properties");
 
-                    System.out.println(artistDao.findArtistById(artistID2));
+                    Boolean repeat5 = false;
+
+                    while(!repeat5) {
+
+                        try {
+                            int artistID2;
+                            System.out.println("Enter artistID");
+                            artistID2 = keyboard.nextInt();
+
+                            System.out.println(artistDao1.findArtistById(artistID2));
+                            repeat5 = true;
+                        }catch (InputMismatchException ex){
+                            System.out.println("ArtistID has to be a number");
+                            keyboard.next();
+
+                            repeat5 = false;
+                        }
+                    }
 
                     break;
                 case 3:
 
-                    int artistID;
-                    System.out.println("Enter artistID: ");
-                    artistID = keyboard.nextInt();
-                    System.out.println(artistID);
+                    AlbumDao albumDao = new AlbumDaoImpl("database.properties");
 
-                    List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistID);
+                    Boolean repeat4 = false;
+                    while(!repeat4) {
 
-                    System.out.println(albums);
+                        try {
+                            int artistID;
+                            System.out.println("Enter artistID: ");
+                            artistID = keyboard.nextInt();
+                            System.out.println(artistID);
+
+                            List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistID);
+
+                            System.out.println(albums);
+                            repeat4 = true;
+                        }catch (InputMismatchException ex){
+
+                            System.out.println("ArtistID has to be a number");
+                            keyboard.next();
+
+                            repeat4 = false;
+                        }
+                    }
 
                     break;
                 case 4:
-                    int albumID;
-                    System.out.println("Enter albumID: ");
-                    albumID = keyboard.nextInt();
 
-                    System.out.println(albumDao.findAlbumById(albumID));
+                    AlbumDao albumDao3 = new AlbumDaoImpl("database.properties");
+
+
+                    Boolean repeat7 = false;
+
+                    while(!repeat7) {
+
+                        try {
+                            int albumID;
+                            System.out.println("Enter albumID: ");
+                            albumID = keyboard.nextInt();
+
+                            System.out.println(albumDao3.findAlbumById(albumID));
+                            repeat7 = true;
+                        }catch (InputMismatchException ex){
+                            System.out.println("Album ID has to be a number");
+                            keyboard.next();
+                            repeat7 = false;
+                        }
+                    }
 
                     break;
                 case 5:
-                    ArrayList<Album> albums4 = albumDao.getAllAlbums();
+
+                    AlbumDao albumDao4 = new AlbumDaoImpl("database.properties");
+
+                    ArrayList<Album> albums4 = albumDao4.getAllAlbums();
 
                     for (Album a: albums4){
                         System.out.println("Artist: " +a);
@@ -191,11 +244,22 @@ public class App {
 
                     SongDao songDao = new SongDaoImpl("database.properties");
 
-                    int songID;
-                    System.out.println("Enter songID: ");
-                    songID = keyboard.nextInt();
+                    Boolean repeat8 = false;
 
-                    System.out.println(songDao.findSongById(songID));
+                    while(!repeat8) {
+                        try {
+                            int songID;
+                            System.out.println("Enter songID: ");
+                            songID = keyboard.nextInt();
+
+                            System.out.println(songDao.findSongById(songID));
+                            repeat8 = true;
+                        }catch(InputMismatchException ex){
+                            System.out.println("SongID has to be a number ");
+                            keyboard.next();
+                            repeat8 = false;
+                        }
+                    }
                     break;
                 case 7:
                     System.out.println("");
@@ -221,10 +285,9 @@ public class App {
 
 
 
+
+
         int num3 = 0;
-
-        RatingDao  ratingDao = new RatingDaoImpl("database.properties");
-
 
         while(num3 != 5){
             String [] array3 = new String[5];
@@ -250,81 +313,82 @@ public class App {
 
                 case 1:
 
-                    System.out.println(ratingDao.implementRatingSong(ratingDao.rateSong()));
+                    RatingDao  ratingDao2 = new RatingDaoImpl("database.properties");
+
+
+                    System.out.println(ratingDao2.implementRatingSong(ratingDao2.rateSong()));
 
                     break;
                 case 2 :
 
-                    System.out.println(ratingDao.getAllRatedSongsAndRating());
-                    break;
-                case 3:
+                   RatingDao ratingDao1 = new RatingDaoImpl("database.properties");
 
-                    System.out.println(ratingDao.getTopRatedSong());
-                    break;
-                case 4:
 
-                    System.out.println(ratingDao.getMostPopularSong());
-                    break;
-                case 5:
-                    break;
+                    ArrayList<Rating> rating = ratingDao1.getAllRatings();
 
-            }
-        }
+                    for (int i = 0; i < rating.size();i++){
 
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
-
-        int num4 =0;
-
-        while(num4 != 5){
-            String [] array4 = new String[5];
-
-            array4[0] = "1. View all playlists";
-            array4[1] = "2. ";
-            array4[2] = "3. ";
-            array4[3] = "4. ";
-            array4[4] = "5. Exit";
-
-            for (int i = 0; i < array4.length; i++) {
-                System.out.println(array4[i]);
-            }
-
-            System.out.println("Enter number: ");
-            num4 = keyboard.nextInt();
-
-            if (num4 <= 0 || num4 > array4.length) {
-                System.out.println("Number is not on menu");
-            }
-
-            switch (num4){
-
-                case 1:
-
-                    ArrayList<Playlist> allPlaylists = playlistDao.getAllPlaylists();
-
-                    for (Playlist p: allPlaylists){
-                        System.out.println("Playlist: " +p);
+                        System.out.println(rating.get(i));
+                        System.out.println("---------------------");
                     }
 
-                    break;
-                case 2 :
+                    SongDao songDao = new SongDaoImpl("database.properties");
 
+                        Boolean repeat2 = false;
+
+                        while(!repeat2) {
+
+                            try {
+                                String username;
+                                System.out.println("Enter username: ");
+                                username = keyboard.next();
+
+                                int songID = 0;
+                                System.out.println("Enter songID: ");
+                                songID = keyboard.nextInt();
+
+
+                                for (int i = 0; i < rating.size(); i++) {
+
+                                    if (rating.get(i).getUsername().equals(username) && rating.get(i).getSongID() == songID) {
+
+                                        Song song = songDao.findSongById(songID);
+
+                                        System.out.println(song + ", Song Rating: " + ratingDao1.getUserRatingFromUsernameAndSongID(username, songID));
+
+                                        repeat2 = true;
+                                    } else {
+
+                                    }
+                                }
+                            }catch (InputMismatchException ex){
+
+                                System.out.println("UserId has to be a number. Enter it again ");
+                                System.out.println("");
+
+                                repeat2 = false;
+                            }
+
+
+                        }
 
                     break;
                 case 3:
+                    RatingDao  ratingDao3 = new RatingDaoImpl("database.properties");
 
-
+                    System.out.println(ratingDao3.getTopRatedSong());
                     break;
                 case 4:
 
+                    RatingDao  ratingDao4 = new RatingDaoImpl("database.properties");
 
+                    System.out.println(ratingDao4.getMostPopularSong());
                     break;
                 case 5:
                     break;
 
             }
         }
-
-
 
 
 

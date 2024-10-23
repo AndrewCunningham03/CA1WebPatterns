@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class User {
 
-
     private String username;
     private String email;
     private String password;
@@ -16,11 +15,6 @@ public class User {
         this.password = password;
         this.userType = userType;
     }
-
-    public Users(){
-
-    }
-
 
     public String getUsername() {
         return username;
