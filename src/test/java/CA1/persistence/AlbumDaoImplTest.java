@@ -29,7 +29,7 @@ class AlbumDaoImplTest {
         List<Album> result = albumDao.viewAllAlbumsFromArtist(1);
 
         // test size
-        assertEquals(1,result.size());
+        assertEquals(expected.size(),result.size());
 
 
         // test if all elements in list are the same

@@ -26,7 +26,7 @@ class ArtistDaoImplTest {
 
         // test size
 
-        assertEquals(5,result.size());
+        assertEquals(expected.size(),result.size());
 
         // test if everything in both list is the same
 

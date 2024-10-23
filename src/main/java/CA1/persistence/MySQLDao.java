@@ -10,11 +10,15 @@ import java.util.Properties;
 
 public class MySQLDao {
     private Properties properties;
+    private Connection conn;
     private String databaseName = "music";
 
     public MySQLDao(){
     }
 
+    public MySQLDao(Connection conn){
+        this.conn = conn;
+    }
     public MySQLDao(String propertiesFilename){
         properties = new Properties();
         try {
@@ -29,7 +33,14 @@ public class MySQLDao {
 
     }
 
+
+
     public Connection getConnection(){
+
+        if(conn != null){
+            return conn;
+        }
+
         String driver = properties.getProperty("driver");
         String url = properties.getProperty("url");
         String database = properties.getProperty("database");
