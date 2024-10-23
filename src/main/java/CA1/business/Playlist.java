@@ -9,14 +9,14 @@ public class Playlist {
     private String playlistName;
     private String username;
     private boolean statusPrivate;
-    private ArrayList<Song> playlist;
 
-    public Playlist(int privateID, String playlistName, String username, boolean statusPrivate, ArrayList<Song> playlist) {
+
+    public Playlist(int privateID, String playlistName, String username, boolean statusPrivate) {
         this.playlistID = privateID;
         this.playlistName = playlistName;
         this.username = username;
         this.statusPrivate = statusPrivate;
-        this.playlist = playlist;
+
     }
 
 
@@ -52,25 +52,19 @@ public class Playlist {
         this.statusPrivate = statusPrivate;
     }
 
-    public ArrayList<Song> getPlaylist() {
-        return playlist;
-    }
 
-    public void setPlaylist(ArrayList<Song> playlist) {
-        this.playlist = playlist;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Playlist playlist1 = (Playlist) o;
-        return playlistID == playlist1.playlistID && statusPrivate == playlist1.statusPrivate && Objects.equals(playlistName, playlist1.playlistName) && Objects.equals(username, playlist1.username) && Objects.equals(playlist, playlist1.playlist);
+        return playlistID == playlist1.playlistID && statusPrivate == playlist1.statusPrivate && Objects.equals(playlistName, playlist1.playlistName) && Objects.equals(username, playlist1.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playlistID, playlistName, username, statusPrivate, playlist);
+        return Objects.hash(playlistID, playlistName, username, statusPrivate);
     }
 
     @Override
@@ -80,7 +74,6 @@ public class Playlist {
                 ", playlistName='" + playlistName + '\'' +
                 ", username='" + username + '\'' +
                 ", statusPrivate=" + statusPrivate +
-                ", playlist=" + playlist +
                 '}';
     }
 }

@@ -255,7 +255,7 @@ public class App {
                     break;
                 case 2 :
 
-                    System.out.println(ratingDao.getAllRatedSongsAndRating());
+                    //System.out.println(ratingDao.getAllRatedSongsAndRating());
                     break;
                 case 3:
 

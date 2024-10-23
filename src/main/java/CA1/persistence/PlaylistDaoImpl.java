@@ -54,8 +54,7 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
                 rs.getInt("playlistID"),
                 rs.getString("playlistName"),
                 rs.getString("username"),
-                rs.getBoolean("private"),
-                (ArrayList<Song>) rs.getArray("playlist")
+                rs.getBoolean("statusPrivate")
         );
         return a;
     }
