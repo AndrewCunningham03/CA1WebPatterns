@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
+public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
     public PlaylistDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -142,6 +142,7 @@ public abstract class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             System.out.println("Playlist: "+playlistName+" has been created");
             return complete;
         }
+
 
     private Playlist mapRow(ResultSet rs)throws SQLException{
 

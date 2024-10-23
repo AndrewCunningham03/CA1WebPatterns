@@ -400,12 +400,8 @@ public class App {
             }
         }
 
-        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties") {
-            @Override
-            public boolean createNewPlaylist(User user) {
-                return false;
-            }
-        };
+        PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+
         int num4 =0;
         while(num4 != 5){
             String [] array4 = new String[5];
@@ -430,7 +426,7 @@ public class App {
                     }
                     break;
                 case 2 :
-                    playlistDao.createNewPlaylist(user);
+                    playlistDao.createPlaylist(user);
                     break;
                 case 3:
                     break;

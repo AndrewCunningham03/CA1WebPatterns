@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public interface PlaylistDao  {
     public ArrayList<Playlist> getAllPlaylists();
 
-    public boolean createNewPlaylist(User user);
+    public int numberOfPlaylists();
+    public boolean insertNewPlaylists(Playlist newPlaylist);
+
+    public boolean createPlaylist(User user);
 
 }
