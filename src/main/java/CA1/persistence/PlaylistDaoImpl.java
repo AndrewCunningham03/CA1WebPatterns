@@ -82,8 +82,7 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
         Connection conn = super.getConnection();
 
-        try(PreparedStatement ps = conn.prepareStatement("INSERT INTO `playlist` (`playlistID`,`playlistName`, `userName`, `statusPrivate`)\n" +
-                "VALUES (?, ?, ?, ?)")){
+        try(PreparedStatement ps = conn.prepareStatement("INSERT INTO playlist VALUES (?, ?, ?, ?)")){
             ps.setInt(1,newPlaylist.getPrivateID());
             ps.setString(2, newPlaylist.getPlaylistName());
             ps.setString(3, newPlaylist.getUsername());
@@ -142,6 +141,35 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             System.out.println("Playlist: "+playlistName+" has been created");
             return complete;
         }
+
+    public boolean updatePlaylistName(int playlistID, String name) throws RuntimeException {
+        int rowsAffected = 0;
+
+        Connection conn = super.getConnection();
+        try (PreparedStatement ps =
+                     conn.prepareStatement("UPDATE Employees SET playlistName = ? WHERE playlistID = ?")) {
+            ps.setString(1, name);
+            ps.setInt(2, playlistID);
+
+            rowsAffected = ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(LocalDateTime.now() + ": An SQLException  occurred while preparing the SQL " +
+                    "statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(rowsAffected > 1){
+            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
+                    ".");
+        }
+        else if(rowsAffected == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 
 
     private Playlist mapRow(ResultSet rs)throws SQLException{
