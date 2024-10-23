@@ -2,7 +2,7 @@ package CA1.business;
 
 import java.util.Objects;
 
-public class Users {
+public class User {
 
 
     private String username;
@@ -10,7 +10,7 @@ public class Users {
     private String password;
     private int userType;
 
-    public Users(String username, String email, String password, int userType) {
+    public User(String username, String email, String password, int userType) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -70,7 +70,7 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
+        User users = (User) o;
         return Objects.equals(username, users.username);
     }
 

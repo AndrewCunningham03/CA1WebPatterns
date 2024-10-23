@@ -1,6 +1,7 @@
 package CA1.persistence;
 
-import CA1.business.Users;
+import CA1.business.Song;
+import CA1.business.User;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -25,12 +26,15 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         super(databaseName);
     }
 
+    public UserDaoImpl(Connection conn){
+        super(conn);
+    }
     public UserDaoImpl(){
         super();
     }
 
     private static final Scanner input = new Scanner(System.in);
-    public Users createUserRegister() throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public User createUserRegister() throws InvalidKeySpecException, NoSuchAlgorithmException {
         System.out.println("Please enter the username:");
         String userName = input.nextLine();
 
@@ -64,11 +68,11 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         int userType = input.nextInt();
 
 
-        return new Users(userName, email, hashPassword(password), userType);
+        return new User(userName, email, hashPassword(password), userType);
     }
 
 
-    public boolean registerUser(Users newUser){
+    public boolean registerUser(User newUser){
 
         int rowsAffected = 0;
 
@@ -109,7 +113,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
 
         Connection conn = super.getConnection();
-        ArrayList<Users> user = new ArrayList<>();
+        ArrayList<User> user = new ArrayList<>();
 
 
         try (PreparedStatement ps = conn.prepareStatement("SELECT * from users WHERE email = ? AND password = ?")) {
@@ -120,7 +124,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Users p = new Users(
+                    User p = new User(
                             rs.getString("username"),
                             rs.getString("email"),
                             rs.getString("password"),
@@ -151,6 +155,47 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
     }
 
 
+    @Override
+    public User findUserByUsername(String username){
+
+        User user = null;
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM users where username = ?")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setString(1, username);
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                if(rs.next()){
+
+                    user = mapRow(rs);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return user;
+    }
+
+
+
     public String hashPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         char[]passwordChars = password.toCharArray();
@@ -170,6 +215,19 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
 
 
+    }
+
+
+    private User mapRow(ResultSet rs)throws SQLException {
+
+        User u = new User(
+
+                rs.getString("username"),
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getInt("userType")
+        );
+        return u;
     }
 
 
