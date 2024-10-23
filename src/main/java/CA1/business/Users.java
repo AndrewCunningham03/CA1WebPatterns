@@ -17,6 +17,10 @@ public class Users {
         this.userType = userType;
     }
 
+    public Users(){
+
+    }
+
 
     public String getUsername() {
         return username;
