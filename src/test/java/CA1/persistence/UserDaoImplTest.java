@@ -14,19 +14,20 @@ class UserDaoImplTest {
     private MySQLDao connectionSource = new MySQLDao("database_test.properties");
 
 
+
     @Test
     void registerUser() throws SQLException {
 
         System.out.println("Test for Register a user");
         User tester = new User("Roanldo","ronaldo@gmail.com","house",1);
 
-        boolean incorrectResult = false;
+        int incorrectResult = -1;
 
         Connection conn = connectionSource.getConnection();
         conn.setAutoCommit(false);
         UserDao userDao = new UserDaoImpl(conn);
 
-        boolean result = userDao.registerUser(tester);
+        int result = userDao.registerUser(tester);
         assertNotEquals(incorrectResult, result);
 
         User inserted = userDao.findUserByUsername(tester.getUsername());
@@ -34,6 +35,32 @@ class UserDaoImplTest {
 
         assertUserEquals(tester, inserted);
     }
+
+    @Test
+    void registerUserButUserMatch(){
+        System.out.println("Test for Register a user");
+        User tester = new User("Toby","ronaldo@gmail.com","house",1);
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        int incorrectResult = -1;
+        int result = userDao.registerUser(tester);
+        assertEquals(incorrectResult, result);
+
+    }
+
+    @Test
+    void registerUserButEmailMatch(){
+        System.out.println("Test for Register a user");
+        User tester = new User("Ronaldo","toby@gmail.com","house",1);
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        int incorrectResult = -1;
+        int result = userDao.registerUser(tester);
+        assertEquals(incorrectResult, result);
+    }
+
 
     @Test
     void registerUserButNull() throws SQLException {
@@ -163,74 +190,7 @@ class UserDaoImplTest {
         assertNull(result);
     }
 
-    @Test
-    void getUserRatingFromUsernameAndSongID(){
 
-        System.out.println("Test get userRating from username and songID");
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        String username = "Toby";
-        int songID = 5;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertEquals(expected, result.getUserRating());
-    }
-
-    @Test
-    void getUserRatingFromUsernameAndSongIDWhereUserNameIsDifferent(){
-
-        System.out.println("Test get userRating from username and songID where userName is different");
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        String username = "Sam";
-        int songID = 5;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertNotEquals(expected, result.getUsername());
-    }
-
-
-    @Test
-    void getUserRatingFromUsernameAndSongIDWhereSongIDIsDifferent(){
-
-        System.out.println("Test get userRating from username and songID where songID is different");
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        String username = "Toby";
-        int songID = 1;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertNotEquals(expected, result.getUserRating());
-    }
-
-    @Test
-    void getUserRatingFromUsernameAndSongIDWhereUsernameIsNull(){
-
-        System.out.println("Test get userRating from username and songID where username is null");
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        String username = null;
-        int songID = 5;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertNotEquals(expected, result);
-    }
 
 
 
