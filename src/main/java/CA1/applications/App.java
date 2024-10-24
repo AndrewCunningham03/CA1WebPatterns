@@ -107,16 +107,6 @@ public class App {
         }
 
 
-
-
-
-
-
-
-
-
-/*
-
         int num2 = 0;
 
 
@@ -416,7 +406,7 @@ public class App {
         }
 
 
- */
+
 
 
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
