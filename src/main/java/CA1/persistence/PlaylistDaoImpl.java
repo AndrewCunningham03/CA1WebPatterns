@@ -113,21 +113,16 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
             System.out.println("Enter playlist name");
             String playlistName = keyboard.next();
-            boolean done = false;
-            boolean status = false;
-            while(!done){
-                System.out.println("Would you like playlist to be public? yes or no");
-                String answer = keyboard.next();
-                if (answer.equalsIgnoreCase("no")){
-                    status=true;
-                    done =true;
-                    return done;
-                }
-                return done;
 
+            boolean status = false;
+            System.out.println("Would you like playlist to be public? yes or no");
+            String answer = keyboard.next();
+            if (answer.equalsIgnoreCase("no")){
+                status=true;
             }
+
             String userName = user.getUsername();
-            int ID = numberOfPlaylists();
+            int ID = numberOfPlaylists()+1;
 
             Playlist playlist = new Playlist(ID,playlistName,userName,status);
 
