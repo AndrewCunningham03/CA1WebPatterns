@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class PlaylistSongDaoImpl extends MySQLDao {
+public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
 
     Scanner keyboard = new Scanner(System.in);
 
@@ -237,6 +237,35 @@ public class PlaylistSongDaoImpl extends MySQLDao {
         }
 
         return playlistSongs;
+    }
+
+
+    public ArrayList<PlaylistSong> getAllPlaylistSongs(){
+        ArrayList<PlaylistSong> playlists = new ArrayList<>();
+
+        Connection conn = super.getConnection();
+
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * from playlistsong")){
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+
+                    PlaylistSong a = mapRow(rs);
+                    playlists.add(a);
+                }
+            }catch(SQLException e){
+                System.out.println(LocalDateTime.now() + ": An SQLException  occurred while running the query" +
+                        " or processing the result.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }catch(SQLException e){
+            System.out.println(LocalDateTime.now() + ": An SQLException  occurred while preparing the SQL " +
+                    "statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return playlists;
     }
 
     private PlaylistSong mapRow(ResultSet rs)throws SQLException{

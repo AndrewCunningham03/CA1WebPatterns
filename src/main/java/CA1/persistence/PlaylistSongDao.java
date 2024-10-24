@@ -14,5 +14,6 @@ public interface PlaylistSongDao {
     public boolean removingSongFromPlayList(PlaylistSong song);
     public boolean removeSongFromPlaylistUser(User user);
     public ArrayList<PlaylistSong> getPlaylistsByID(int playlistID);
+    public ArrayList<PlaylistSong> getAllPlaylistSongs();
 
 }

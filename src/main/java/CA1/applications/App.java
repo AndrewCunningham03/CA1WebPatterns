@@ -96,15 +96,10 @@ public class App {
                     System.out.println(result = userDao.loginUser(email,hashPassword(password)));
                     if(result == true){
 
-                        User loggedInUser = new User(userDao.findUserByEmail(email));
+                        User loggedInUser = new User(userDao.findUserByThereEmail(email));
 
                         user = loggedInUser;
                     }
-
-                    user.getUsername();
-                    user.getEmail();
-                    user.getPassword();
-                    user.getUserType();
                     break;
 
             }
@@ -120,7 +115,7 @@ public class App {
 
 
 
-
+/*
 
         int num2 = 0;
 
@@ -420,16 +415,24 @@ public class App {
             }
         }
 
+
+ */
+
+
         PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
 
+        PlaylistSongDaoImpl playlistSongDao = new PlaylistSongDaoImpl("database.properties");
+
         int num4 =0;
-        while(num4 != 5){
-            String [] array4 = new String[5];
+        while(num4 != 7){
+            String [] array4 = new String[7];
             array4[0] = "1. View all Playlists";
             array4[1] = "2. Create new Playlist";
-            array4[2] = "3. ";
-            array4[3] = "4. ";
-            array4[4] = "5. Exit";
+            array4[2] = "3. Add a song to PlayList";
+            array4[3] = "4. Remove song from Playlist";
+            array4[4] = "5. Change playlist name";
+            array4[5] = "6. Exit";
+            array4[6] = "7. Exit";
             for (int i = 0; i < array4.length; i++) {
                 System.out.println(array4[i]);
             }
@@ -440,7 +443,7 @@ public class App {
             }
             switch (num4){
                 case 1:
-                    ArrayList<Playlist> allPlaylists = playlistDao.getAllPlaylists();
+                    ArrayList<Playlist> allPlaylists = playlistDao.getAllPlaylistsUser(user);
                     for (Playlist p: allPlaylists){
                         System.out.println("Playlist: " +p);
                     }
@@ -449,16 +452,63 @@ public class App {
                     playlistDao.createPlaylist(user);
                     break;
                 case 3:
+                    playlistSongDao.addNewSongToPlaylistUser(user);
                     break;
                 case 4:
+                    playlistSongDao.removeSongFromPlaylistUser(user);
                     break;
                 case 5:
+                    playlistDao.updatePlaylistNameUser(user);
+                    break;
+                case 6:
+                    viewSongsInPlaylist();
+                    break;
+                case 7:
+                    System.out.println("Exiting....");
                     break;
             }
         }
 
 
 
+    }
+    public static void viewSongsInPlaylist(){
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+
+        PlaylistSongDao playlistSongDao =  new PlaylistSongDaoImpl("database.properties");
+
+        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
+
+        ArrayList<PlaylistSong> playlistSongs = new ArrayList<>();
+
+
+        String playlistName = null;
+        boolean found2 = false;
+        while(!found2) {
+
+
+                System.out.println("Enter Playlist name");
+                playlistName = keyboard.nextLine();
+
+                for (int i = 0; i < playlists.size();i++){
+                    if (playlists.get(i).getPlaylistName().equalsIgnoreCase(playlistName)){
+
+                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                            int playlistID = playlists.get(i).getPlaylistID();
+                        ArrayList<PlaylistSong> list =   playlistSongDao.getPlaylistsByID(playlistID);
+
+                        for (int j = 0; j < list.size();j++){
+
+                            playlistSongs.add(list.get(j));
+                            found2=true;
+                        }
+                        }
+                    }
+                }
+        }
+        for(PlaylistSong p: playlistSongs){
+            System.out.println("PlaylistSong:" + p);
+        }
     }
 
 
