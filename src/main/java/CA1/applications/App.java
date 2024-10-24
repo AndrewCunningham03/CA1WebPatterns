@@ -368,7 +368,7 @@ public class App {
 
                                     Song song = songDao.findSongById(songID);
 
-                                    System.out.println(song + ", Song Rating: " + ratingDao1.getUserRatingFromUsernameAndSongID(user.getUsername(), songID));
+                                    System.out.println(song + ", Song Rating: " + ratingDao1.findRatingByUsernameAndSongID(user.getUsername(), songID));
 
                                     repeat2 = true;
                                 } else {
