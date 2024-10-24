@@ -14,5 +14,6 @@ public interface PlaylistDao  {
     public boolean createPlaylist(User user);
     public Playlist getPlaylistsByID(int playlistID);
     public boolean updatePlaylistNameUser(User user);
+    public ArrayList<Playlist> getAllPlaylistsUser(User user);
 
 }
