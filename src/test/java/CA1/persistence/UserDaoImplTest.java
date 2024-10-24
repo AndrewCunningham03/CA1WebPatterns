@@ -1,5 +1,6 @@
 package CA1.persistence;
 
+import CA1.business.Rating;
 import CA1.business.User;
 import org.junit.jupiter.api.Test;
 
@@ -174,9 +175,9 @@ class UserDaoImplTest {
 
         double expected = 3.9;
 
-        double result = ratingDao.getUserRatingFromUsernameAndSongID(username, songID);
+        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
 
-        assertEquals(expected, result);
+        assertEquals(expected, result.getUserRating());
     }
 
     @Test
@@ -191,9 +192,9 @@ class UserDaoImplTest {
 
         double expected = 3.9;
 
-        double result = ratingDao.getUserRatingFromUsernameAndSongID(username, songID);
+        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
 
-        assertNotEquals(expected, result);
+        assertNotEquals(expected, result.getUsername());
     }
 
 
@@ -209,9 +210,9 @@ class UserDaoImplTest {
 
         double expected = 3.9;
 
-        double result = ratingDao.getUserRatingFromUsernameAndSongID(username, songID);
+        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
 
-        assertNotEquals(expected, result);
+        assertNotEquals(expected, result.getUserRating());
     }
 
     @Test
@@ -226,7 +227,7 @@ class UserDaoImplTest {
 
         double expected = 3.9;
 
-        double result = ratingDao.getUserRatingFromUsernameAndSongID(username, songID);
+        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
 
         assertNotEquals(expected, result);
     }

@@ -401,47 +401,17 @@ public class App {
                 case 5:
 
                     RatingDao ratingDao5 = new RatingDaoImpl("database.properties");
+                    SongDao songDao1 = new SongDaoImpl("database.properties");
 
                     ArrayList<Rating> list = ratingDao5.getUserRatingFromUsername(user.getUsername());
-
-
 
                     System.out.println("Songs that " +user.getUsername() + " has rated");
                     System.out.println("");
                     for (int i = 0;i < list.size();i++){
 
-                        System.out.println("SongID: " +list.get(i).getSongID() + " ,Rating: " +list.get(i).getUserRating());
+                        System.out.println("Song: " +songDao1.findSongById(list.get(i).getSongID()) + " ,Rating: " +list.get(i).getUserRating());
                         System.out.println("------------------");
                     }
-
-                    SongDao songDao1 = new SongDaoImpl("database.properties");
-
-                    Boolean repeat = false;
-
-                    while(!repeat) {
-                        try {
-                            int songID2;
-                            System.out.println("Enter which songID you want to see that you rated: ");
-                            songID2 = keyboard.nextInt();
-
-
-                            for (int i = 0; i < list.size(); i++) {
-
-                                if (list.get(i).getSongID() == songID2) {
-                                    System.out.println(songDao1.findSongById(songID2));
-                                    repeat = true;
-                                } else {
-
-                                }
-                            }
-                        }catch (InputMismatchException ex){
-                            System.out.println("SongID has to be a number");
-                            keyboard.next();
-                            repeat = false;
-                        }
-                    }
-
-
 
                     break;
                 case 6:
