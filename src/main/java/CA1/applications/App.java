@@ -402,15 +402,15 @@ public class App {
 
                     RatingDao ratingDao5 = new RatingDaoImpl("database.properties");
 
-                    ArrayList<Double> list = ratingDao5.getUserRatingFromUsername(user.getUsername());
-                    ArrayList<Integer> songID =  ratingDao5.getAllSongsUserRated(user.getUsername());
+                    ArrayList<Rating> list = ratingDao5.getUserRatingFromUsername(user.getUsername());
+
 
 
                     System.out.println("Songs that " +user.getUsername() + " has rated");
                     System.out.println("");
                     for (int i = 0;i < list.size();i++){
 
-                        System.out.println("SongID: " +songID.get(i) + " ,Rating: " +list.get(i));
+                        System.out.println("SongID: " +list.get(i).getSongID() + " ,Rating: " +list.get(i).getUserRating());
                         System.out.println("------------------");
                     }
 
@@ -425,9 +425,9 @@ public class App {
                             songID2 = keyboard.nextInt();
 
 
-                            for (int i = 0; i < songID.size(); i++) {
+                            for (int i = 0; i < list.size(); i++) {
 
-                                if (songID.get(i).equals(songID2)) {
+                                if (list.get(i).getSongID() == songID2) {
                                     System.out.println(songDao1.findSongById(songID2));
                                     repeat = true;
                                 } else {
