@@ -8,4 +8,5 @@ public interface SongDao {
 
     public Song findSongById(int songID);
     public ArrayList<Song> getAllSongs();
+    public ArrayList<Song> getSongByTitle(String songTitle);
 }
