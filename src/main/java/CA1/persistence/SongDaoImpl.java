@@ -1,6 +1,7 @@
 package CA1.persistence;
 
 import CA1.business.Album;
+import CA1.business.Playlist;
 import CA1.business.Rating;
 import CA1.business.Song;
 
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class SongDaoImpl extends MySQLDao implements SongDao{
@@ -59,6 +61,35 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
             super.freeConnection(conn);
         }
         return song;
+    }
+
+@Override
+    public ArrayList<Song> getAllSongs(){
+        ArrayList<Song> songs = new ArrayList<>();
+
+        Connection conn = super.getConnection();
+
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * from songs")){
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+
+                    Song s = mapRow(rs);
+                    songs.add(s);
+                }
+            }catch(SQLException e){
+                System.out.println(LocalDateTime.now() + ": An SQLException  occurred while running the query" +
+                        " or processing the result.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }catch(SQLException e){
+            System.out.println(LocalDateTime.now() + ": An SQLException  occurred while preparing the SQL " +
+                    "statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return songs;
     }
 
 
