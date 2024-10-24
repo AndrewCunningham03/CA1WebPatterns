@@ -5,10 +5,7 @@ import CA1.business.Rating;
 import CA1.business.Song;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -63,39 +60,49 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return new Rating(username,songID,rating);
     }
 
-    @Override
-    public boolean implementRatingSong(Rating rating){
-
+@Override
+    public int implementRatingSong(Rating rating){
+        // DATABASE CODE
+        //
+        // Create variable to hold the result of the operation
+        // Remember, where you are NOT doing a select, you will only ever get
+        // a number indicating how many things were changed/affected
         int rowsAffected = 0;
+
 
         Connection conn = super.getConnection();
 
+        // TRY to prepare a statement from the connection
+        // When you are parameterizing the update, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
         try(PreparedStatement ps = conn.prepareStatement("insert into rating values(?, ?, " +
                 "?)")) {
             // Fill in the blanks, i.e. parameterize the update
             ps.setString(1, rating.getUsername());
             ps.setInt(2, rating.getSongID());
-            ps.setDouble(3, rating.getUserRating ());
+            ps.setDouble(3, rating.getUserRating());
 
+            // Execute the update and store how many rows were affected/changed
+            // when inserting, this number indicates if the row was
+            // added to the database (>0 means it was added)
             rowsAffected = ps.executeUpdate();
-        }
-        catch(SQLException e){
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
             System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
-
+        return rowsAffected;
     }
+
+
+
 
     @Override
     public ArrayList<Rating> getAllRatings(){

@@ -1,5 +1,6 @@
 package CA1.persistence;
 
+import CA1.business.Rating;
 import CA1.business.Song;
 import CA1.business.User;
 
@@ -8,10 +9,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -71,13 +69,21 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         return new User(userName, email, hashPassword(password), userType);
     }
 
-
-    public boolean registerUser(User newUser){
-
+    @Override
+    public int registerUser(User newUser){
+        // DATABASE CODE
+        //
+        // Create variable to hold the result of the operation
+        // Remember, where you are NOT doing a select, you will only ever get
+        // a number indicating how many things were changed/affected
         int rowsAffected = 0;
+
 
         Connection conn = super.getConnection();
 
+        // TRY to prepare a statement from the connection
+        // When you are parameterizing the update, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
         try(PreparedStatement ps = conn.prepareStatement("insert into users values(?, ?, ?, " +
                 "?)")) {
             // Fill in the blanks, i.e. parameterize the update
@@ -86,26 +92,24 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
             ps.setString(3, newUser.getPassword());
             ps.setInt(4, newUser.getUserType());
 
-
+            // Execute the update and store how many rows were affected/changed
+            // when inserting, this number indicates if the row was
+            // added to the database (>0 means it was added)
             rowsAffected = ps.executeUpdate();
-        }
-        catch(SQLException e){
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
             System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return rowsAffected;
     }
-
 
 
     public boolean loginUser(String email, String password)  {
@@ -193,7 +197,9 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         }
         return user;
     }
-    public User findUserByEmail(String email){
+
+    @Override
+    public User findUserByThereEmail(String email){
 
         User user = null;
 
