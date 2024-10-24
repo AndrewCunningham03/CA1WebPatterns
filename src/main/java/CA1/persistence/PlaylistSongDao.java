@@ -1,5 +1,6 @@
 package CA1.persistence;
 
+import CA1.business.Playlist;
 import CA1.business.PlaylistSong;
 import CA1.business.User;
 

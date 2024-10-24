@@ -226,6 +226,18 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
     }
 
+    public ArrayList<Playlist> getAllPlaylistsUser(User user){
+        ArrayList<Playlist> playlists = getAllPlaylists();
+        ArrayList<Playlist> playlistsForUser = new ArrayList<>();
+
+        for(int i = 0; i<playlists.size();i++){
+            if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                playlistsForUser.add(playlists.get(i));
+            }
+        }
+        return playlistsForUser;
+    }
+
 
 
 
