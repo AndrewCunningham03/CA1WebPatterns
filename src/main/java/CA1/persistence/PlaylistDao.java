@@ -12,5 +12,6 @@ public interface PlaylistDao  {
     public boolean insertNewPlaylists(Playlist newPlaylist);
 
     public boolean createPlaylist(User user);
+    public Playlist getPlaylistsByID(int playlistID);
 
 }

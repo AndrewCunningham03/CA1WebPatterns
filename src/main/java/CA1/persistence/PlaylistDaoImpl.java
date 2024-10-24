@@ -49,6 +49,33 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
             return playlists;
         }
+    public Playlist getPlaylistsByID(int playlistID){
+        Playlist playlist = null;
+
+        Connection conn = super.getConnection();
+
+        try(PreparedStatement ps = conn.prepareStatement("SELECT * from playlist where playlistID = ?")){
+            ps.setInt(1,playlistID);
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+
+                    playlist = mapRow(rs);
+                }
+            }catch(SQLException e){
+                System.out.println(LocalDateTime.now() + ": An SQLException  occurred while running the query" +
+                        " or processing the result.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }catch(SQLException e){
+            System.out.println(LocalDateTime.now() + ": An SQLException  occurred while preparing the SQL " +
+                    "statement.");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return playlist;
+    }
 
     public int numberOfPlaylists(){
         ArrayList<Playlist> playlists = new ArrayList<>();
@@ -83,7 +110,7 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
         Connection conn = super.getConnection();
 
         try(PreparedStatement ps = conn.prepareStatement("INSERT INTO playlist VALUES (?, ?, ?, ?)")){
-            ps.setInt(1,newPlaylist.getPrivateID());
+            ps.setInt(1,newPlaylist.getPlaylistID());
             ps.setString(2, newPlaylist.getPlaylistName());
             ps.setString(3, newPlaylist.getUsername());
             ps.setBoolean(4,newPlaylist.isStatusPrivate());

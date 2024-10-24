@@ -11,8 +11,8 @@ public class Playlist {
     private boolean statusPrivate;
 
 
-    public Playlist(int privateID, String playlistName, String username, boolean statusPrivate) {
-        this.playlistID = privateID;
+    public Playlist(int playlistID, String playlistName, String username, boolean statusPrivate) {
+        this.playlistID = playlistID;
         this.playlistName = playlistName;
         this.username = username;
         this.statusPrivate = statusPrivate;
@@ -20,11 +20,11 @@ public class Playlist {
     }
 
 
-    public int getPrivateID() {
+    public int getPlaylistID() {
         return playlistID;
     }
 
-    public void setPrivateID(int privateID) {
+    public void setPlaylistID(int privateID) {
         this.playlistID = privateID;
     }
 
