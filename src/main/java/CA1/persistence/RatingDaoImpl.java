@@ -1,5 +1,6 @@
 package CA1.persistence;
 
+import CA1.business.Artist;
 import CA1.business.Rating;
 import CA1.business.Song;
 
@@ -207,6 +208,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return songDao.findSongById(rating);
     }
 
+
     @Override
     public Rating findRatingByUsernameAndSongID(String username, int songID){
 
@@ -247,6 +249,8 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         }
         return rating;
     }
+
+
 
     @Override
     public double getUserRatingFromUsernameAndSongID(String username, int songID){
@@ -290,6 +294,97 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
 
+    @Override
+    public ArrayList<Double> getUserRatingFromUsername(String username){
+
+        ArrayList<Double> rating = new ArrayList<>();
+
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT userRating FROM rating where username = ? ")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setString(1, username);
+
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                while(rs.next()){
+                    double a = mapRowRating(rs);
+                    rating.add(a);
+
+                }
+
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return rating;
+    }
+
+    @Override
+    public ArrayList<Integer> getAllSongsUserRated(String username){
+
+        ArrayList<Integer> songID = new ArrayList<>();
+
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT songID FROM rating where username = ? ")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setString(1, username);
+
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                while(rs.next()){
+                    Integer s = mapRow1(rs);
+                    songID.add(s);
+
+                }
+
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return songID;
+
+
+    }
+
+
+
+
     private Rating mapRow(ResultSet rs)throws SQLException {
 
         Rating r = new Rating(
@@ -313,7 +408,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
 
-    /*
+
     private Song mapRowSong(ResultSet rs)throws SQLException {
 
         Song s = new Song(
@@ -327,7 +422,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return s;
     }
 
-     */
+
 
 }
 

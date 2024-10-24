@@ -4,6 +4,9 @@ import CA1.business.*;
 import CA1.persistence.*;
 
 
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
@@ -19,7 +22,7 @@ public class App {
         Scanner keyboard = new Scanner(System.in);
 
 
-        System.out.println();
+
 
         UserDao userDao = new UserDaoImpl("database.properties");
 
@@ -90,7 +93,7 @@ public class App {
                     System.out.println("Enter password: ");
                     password = keyboard.next();
 
-                    System.out.println(result = userDao.loginUser(email,password));
+                    System.out.println(result = userDao.loginUser(email,hashPassword(password)));
                     if(result == true){
 
                         User loggedInUser = new User(userDao.findUserByEmail(email));
@@ -299,14 +302,15 @@ public class App {
 
         int num3 = 0;
 
-        while(num3 != 5){
-            String [] array3 = new String[5];
+        while(num3 != 6){
+            String [] array3 = new String[6];
 
             array3[0] = "1. Rate a song from 1-5";
-            array3[1] = "2. View all songs and what song a particular user has rated with the song and rating";
+            array3[1] = "2. Select a particular song you have rated and see the rating with the song ";
             array3[2] = "3. Get top rated song";
             array3[3] = "4. Get the most popular song";
-            array3[4] = "5. Exit";
+            array3[4] = "5. View all songs you have rated and there rating";
+            array3[5] = "6. Exit";
 
             for (int i = 0; i < array3.length; i++) {
                 System.out.println(array3[i]);
@@ -326,7 +330,7 @@ public class App {
                     RatingDao  ratingDao2 = new RatingDaoImpl("database.properties");
 
 
-                    System.out.println(ratingDao2.implementRatingSong(ratingDao2.rateSong()));
+                    System.out.println(ratingDao2.implementRatingSong(rateSong()));
 
                     break;
                 case 2 :
@@ -349,9 +353,9 @@ public class App {
                     while(!repeat2) {
 
                         try {
-                            String username;
-                            System.out.println("Enter username: ");
-                            username = keyboard.next();
+                          //  String username;
+                           // System.out.println("Enter username: ");
+                           // username = keyboard.next();
 
                             int songID = 0;
                             System.out.println("Enter songID: ");
@@ -360,11 +364,11 @@ public class App {
 
                             for (int i = 0; i < rating.size(); i++) {
 
-                                if (rating.get(i).getUsername().equals(username) && rating.get(i).getSongID() == songID) {
+                                if (rating.get(i).getUsername().equals(user.getUsername()) && rating.get(i).getSongID() == songID) {
 
                                     Song song = songDao.findSongById(songID);
 
-                                    System.out.println(song + ", Song Rating: " + ratingDao1.getUserRatingFromUsernameAndSongID(username, songID));
+                                    System.out.println(song + ", Song Rating: " + ratingDao1.getUserRatingFromUsernameAndSongID(user.getUsername(), songID));
 
                                     repeat2 = true;
                                 } else {
@@ -395,6 +399,52 @@ public class App {
                     System.out.println(ratingDao4.getMostPopularSong());
                     break;
                 case 5:
+
+                    RatingDao ratingDao5 = new RatingDaoImpl("database.properties");
+
+                    ArrayList<Double> list = ratingDao5.getUserRatingFromUsername(user.getUsername());
+                    ArrayList<Integer> songID =  ratingDao5.getAllSongsUserRated(user.getUsername());
+
+
+                    System.out.println("Songs that " +user.getUsername() + " has rated");
+                    System.out.println("");
+                    for (int i = 0;i < list.size();i++){
+
+                        System.out.println("SongID: " +songID.get(i) + " ,Rating: " +list.get(i));
+                        System.out.println("------------------");
+                    }
+
+                    SongDao songDao1 = new SongDaoImpl("database.properties");
+
+                    Boolean repeat = false;
+
+                    while(!repeat) {
+                        try {
+                            int songID2;
+                            System.out.println("Enter which songID you want to see that you rated: ");
+                            songID2 = keyboard.nextInt();
+
+
+                            for (int i = 0; i < songID.size(); i++) {
+
+                                if (songID.get(i).equals(songID2)) {
+                                    System.out.println(songDao1.findSongById(songID2));
+                                    repeat = true;
+                                } else {
+
+                                }
+                            }
+                        }catch (InputMismatchException ex){
+                            System.out.println("SongID has to be a number");
+                            keyboard.next();
+                            repeat = false;
+                        }
+                    }
+
+
+
+                    break;
+                case 6:
                     break;
 
             }
@@ -439,5 +489,59 @@ public class App {
 
 
 
+    }
+
+
+    public static String hashPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+
+        char[]passwordChars = password.toCharArray();
+        byte [] saltBytes = "NotSoSecretSalt".getBytes();
+        int iterations = 65536;
+        int keySize = 256;
+
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+
+        PBEKeySpec spec = new PBEKeySpec(passwordChars,saltBytes,iterations,keySize);
+
+        SecretKey key = factory.generateSecret(spec);
+
+        String keyAsString = Base64.getEncoder().encodeToString(key.getEncoded());
+
+        return keyAsString;
+
+    }
+
+    private static final Scanner keyboard = new Scanner(System.in);
+
+    public static Rating rateSong(){
+
+     //   System.out.println("Enter username: ");
+      //  String username = keyboard.nextLine();
+
+        System.out.println("Enter songID");
+        int songID = keyboard.nextInt();
+
+
+        double rating = 0;
+
+        boolean repeat = false;
+
+        while(!repeat){
+
+            System.out.println("Enter song rating: ");
+            rating = keyboard.nextDouble();
+
+            if (rating >=1 && rating <= 5){
+
+                System.out.println("Thank you for the rating ");
+                repeat = true;
+            }else{
+                System.out.println("Number has to be between 1 - 5: ");
+                repeat = false;
+            }
+        }
+
+
+        return new Rating(user.getUsername(),songID,rating);
     }
 }
