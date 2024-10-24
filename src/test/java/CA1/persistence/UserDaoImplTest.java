@@ -15,6 +15,9 @@ class UserDaoImplTest {
 
 
 
+    /// TEST FOR REGISTER
+
+
     @Test
     void registerUser() throws SQLException {
 
@@ -78,6 +81,7 @@ class UserDaoImplTest {
         });
     }
 
+    //// LOGIN TEST
     @Test
     void loginUser() {
 
@@ -98,7 +102,7 @@ class UserDaoImplTest {
     @Test
     void loginUserButNotCorrectEmail() {
 
-        System.out.println("Test for Login a user but nopt correct Email");
+        System.out.println("Test for Login a user but not correct Email");
 
         String email = "toby345@gmail.com";
         String password = "ron";
@@ -115,7 +119,7 @@ class UserDaoImplTest {
     @Test
     void loginUserButNotCorrectPassword() {
 
-        System.out.println("Test for Login a user but nopt correct Email");
+        System.out.println("Test for Login a user but not correct Password");
 
         String email = "toby@gmail.com";
         String password = "ron345423";
@@ -164,6 +168,8 @@ class UserDaoImplTest {
         assertEquals(expected, result);
     }
 
+
+    // FIND BY USERNAME TEST
     @Test
     void findUserByUsername() {
         System.out.println("Test find user by username");
@@ -192,6 +198,55 @@ class UserDaoImplTest {
 
 
 
+    //// TEST EMAILS
+@Test
+    void findUserByThereEmail(){
+
+        System.out.println("Find user by there email");
+
+        User expected = new User("Toby","toby@gmail.com","ron",1);
+
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        User result = userDao.findUserByUsername(expected.getEmail());
+
+        assertEquals(expected,result);
+
+    }
+
+
+    @Test
+    void findUserByThereEmailWhenEmailIsNotThere(){
+
+        System.out.println("Find user by there email when email is not there");
+
+        User expected = new User("Toby","yyyy@gmail.com","ron",1);
+
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        User result = userDao.findUserByUsername(expected.getEmail());
+
+        assertNotEquals(expected,result);
+
+    }
+
+    @Test
+    void findUserByThereEmailWhenEmailIsNull(){
+
+        System.out.println("Find user by there email when email is null");
+
+        User expected = new User("Toby",null,"ron",1);
+
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        User result = userDao.findUserByUsername(expected.getEmail());
+
+        assertNotEquals(expected,result);
+
+    }
 
 
     private void assertUserEquals(User u1, User u2){

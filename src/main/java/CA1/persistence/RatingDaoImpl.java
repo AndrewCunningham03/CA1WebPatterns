@@ -327,8 +327,6 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return r;
     }
 
-
-
     private Song mapRowSong(ResultSet rs)throws SQLException {
 
         Song s = new Song(

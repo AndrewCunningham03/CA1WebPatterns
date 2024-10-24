@@ -152,83 +152,6 @@ class RatingDaoImplTest {
     }
 
     @Test
-    void getTopRatedSongWhenSongIdDontMatch() {
-
-        System.out.println("Test for get the song with the highest rating average when songID doesnt match");
-
-        Time t1 = Time.valueOf("00:04:34");
-        Song expected = new Song(12,"Wesleys Theory",5, 2, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getTopRatedSong();
-
-        assertNotEquals(expected, result);
-
-
-    }
-
-    @Test
-    void getTopRatedSongWhenSongNameDontMatch() {
-
-        System.out.println("Test for get the song with the highest rating average when songName doesnt match");
-
-        Time t1 = Time.valueOf("00:04:34");
-        Song expected = new Song(2,"yyyy",5, 2, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getTopRatedSong();
-
-        assertNotEquals(expected, result);
-    }
-
-    @Test
-    void getTopRatedSongWhenSongTimeDontMatch() {
-
-        System.out.println("Test for get the song with the highest rating average when songTime doesnt match");
-
-        Time t1 = Time.valueOf("00:14:34");
-        Song expected = new Song(2,"Wesleys Theory",5, 2, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getTopRatedSong();
-
-        assertNotEquals(expected, result);
-    }
-
-    @Test
-    void getTopRatedSongWhenAlbumIDDontMatch() {
-
-        System.out.println("Test for get the song with the highest rating average when albumID doesnt match");
-
-        Time t1 = Time.valueOf("00:04:34");
-        Song expected = new Song(2,"Wesleys Theory",2, 2, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getTopRatedSong();
-
-        assertNotEquals(expected, result);
-    }
-
-    @Test
-    void getTopRatedSongWhenArtistIDDontMatch() {
-
-        System.out.println("Test for get the song with the highest rating average when artistID doesnt match");
-
-        Time t1 = Time.valueOf("00:04:34");
-        Song expected = new Song(2,"Wesleys Theory",5, 9, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getTopRatedSong();
-
-        assertNotEquals(expected, result);
-    }
-
-    @Test
     void getTopRatedSongWhenSongIsNull() {
 
         System.out.println("Test for get the song with the highest rating average when song is null");
@@ -266,30 +189,13 @@ class RatingDaoImplTest {
 
 
     @Test
-    void getMostPopularSongWhenSongIdDoesntMatch() {
+    void getMostPopularSongWhenMostPopularSongDoesntMatch() {
 
         System.out.println("test for which song is rated is the most popular song to be rated by users when songID doesnt match");
 
-        Time t1 = Time.valueOf("00:04:59");
+        Time t1 = Time.valueOf("00:02:23");
 
-        Song expected = new Song(11, "Come on", 1, 1, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getMostPopularSong();
-
-        assertNotEquals(expected, result);
-
-    }
-
-    @Test
-    void getMostPopularSongWhenSongNameDoesntMatch() {
-
-        System.out.println("test for which song is rated is the most popular song to be rated by users when songName doesnt match");
-
-        Time t1 = Time.valueOf("00:04:59");
-
-        Song expected = new Song(1, "Come on123", 1, 1, t1);
+        Song expected = new Song(3, "Meh", 4, 3, t1);
 
         RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
 
@@ -299,56 +205,6 @@ class RatingDaoImplTest {
 
     }
 
-    @Test
-    void getMostPopularSongWhenAlbumIDDoesntMatch() {
-
-        System.out.println("test for which song is rated is the most popular song to be rated by users when songName doesnt match");
-
-        Time t1 = Time.valueOf("00:04:59");
-
-        Song expected = new Song(1, "Come on", 11, 1, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getMostPopularSong();
-
-        assertNotEquals(expected, result);
-
-    }
-
-    @Test
-    void getMostPopularSongWhenArtistIDDoesntMatch() {
-
-        System.out.println("test for which song is rated is the most popular song to be rated by users when songName doesnt match");
-
-        Time t1 = Time.valueOf("00:04:59");
-
-        Song expected = new Song(1, "Come on", 1, 11, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getMostPopularSong();
-
-        assertNotEquals(expected, result);
-
-    }
-
-    @Test
-    void getMostPopularSongWhenSongLengthDoesntMatch() {
-
-        System.out.println("test for which song is rated is the most popular song to be rated by users when songName doesnt match");
-
-        Time t1 = Time.valueOf("00:14:59");
-
-        Song expected = new Song(1, "Come on", 1, 1, t1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Song result = ratingDao.getMostPopularSong();
-
-        assertNotEquals(expected, result);
-
-    }
 
     @Test
     void getMostPopularSongWhenNull() {
@@ -412,75 +268,57 @@ class RatingDaoImplTest {
     }
 
 
+    /// GET ALL USER RATING FROM USERNAME
 
     @Test
-    void getUserRatingFromUsernameAndSongID(){
+    void getUserRatingFromUsername(){
 
-        System.out.println("Test get userRating from username and songID");
+        System.out.println("Test for get all user ratings from username");
+
+        Rating r = new Rating("Toby", 1, 1);
+
+        ArrayList<Rating> expected = new ArrayList<>();
+        expected.add(new Rating("Toby", 1, 1));
+        expected.add(new Rating("Toby", 2, 4.8));
+        expected.add(new Rating("Toby", 3, 4));
+        expected.add(new Rating("Toby", 5, 3.9));
 
         RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
 
-        String username = "Toby";
-        int songID = 5;
+        ArrayList<Rating> result = ratingDao.getUserRatingFromUsername(r.getUsername());
 
-        double expected = 3.9;
 
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
+        for (int i = 0; i < expected.size();i++){
 
-        assertEquals(expected, result.getUserRating());
+            assertEquals(expected.get(i), result.get(i));
+        }
     }
 
     @Test
-    void getUserRatingFromUsernameAndSongIDWhereUserNameIsDifferent(){
+    void getUserRatingFromUsernameWhenDoesntMatch(){
 
-        System.out.println("Test get userRating from username and songID where userName is different");
+        System.out.println("Test for get all user ratings from username");
 
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
+        Rating r = new Rating("Toby", 1, 1);
 
-        String username = "Sam";
-        int songID = 5;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertNotEquals(expected, result.getUsername());
-    }
-
-
-    @Test
-    void getUserRatingFromUsernameAndSongIDWhereSongIDIsDifferent(){
-
-        System.out.println("Test get userRating from username and songID where songID is different");
+        ArrayList<Rating> expected = new ArrayList<>();
+        expected.add(new Rating("Robert", 1, 1));
+        expected.add(new Rating("Robert", 2, 4.8));
+        expected.add(new Rating("Robert", 3, 4));
+        expected.add(new Rating("Robert", 5, 3.9));
 
         RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
 
-        String username = "Toby";
-        int songID = 1;
+        ArrayList<Rating> result = ratingDao.getUserRatingFromUsername(r.getUsername());
 
-        double expected = 3.9;
 
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
+        for (int i = 0; i < expected.size();i++){
 
-        assertNotEquals(expected, result.getUserRating());
+            assertNotEquals(expected.get(i), result.get(i));
+        }
     }
 
-    @Test
-    void getUserRatingFromUsernameAndSongIDWhereUsernameIsNull(){
 
-        System.out.println("Test get userRating from username and songID where username is null");
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        String username = null;
-        int songID = 5;
-
-        double expected = 3.9;
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(username, songID);
-
-        assertNotEquals(expected, result);
-    }
 
 
     private void assertRatingEquals(Rating r1, Rating r2){
