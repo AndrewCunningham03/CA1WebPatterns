@@ -287,15 +287,16 @@ public class App {
 
         int num3 = 0;
 
-        while(num3 != 6){
-            String [] array3 = new String[6];
+        while(num3 != 7){
+            String [] array3 = new String[7];
 
             array3[0] = "1. Rate a song from 1-5";
             array3[1] = "2. Select a particular song you have rated and see the rating with the song ";
             array3[2] = "3. Get top rated song";
             array3[3] = "4. Get the most popular song";
             array3[4] = "5. View all songs you have rated and there rating";
-            array3[5] = "6. Exit";
+            array3[5] = "6. Get most popular song that are in playlist";
+            array3[6] = "7. Exit";
 
             for (int i = 0; i < array3.length; i++) {
                 System.out.println(array3[i]);
@@ -400,6 +401,40 @@ public class App {
 
                     break;
                 case 6:
+
+                    PlaylistSongDao playlistSongDao = new PlaylistSongDaoImpl("database.properties");
+                    SongDao songDao2 = new SongDaoImpl("database.properties");
+                    ArrayList<PlaylistSong> playlist = playlistSongDao.getAllPlaylistSongs();
+
+                    PlaylistSong p1 = playlist.get(0);
+                    int max = 0;
+
+
+                    for (int i = 0; i < playlist.size();i++){
+
+                        int count = 0;
+                      for (int j = 0; j < playlist.size();j++){
+
+                          if (playlist.get(i).getSongID() == playlist.get(j).getSongID()){
+
+                             count++;
+
+                          }
+                      }
+
+                      if (count > max){
+                          max = count;
+                          p1 = playlist.get(i);
+                      }
+
+                    }
+
+                    System.out.println(songDao2.findSongById(p1.getSongID()));
+
+
+
+                    break;
+                case 7:
                     break;
 
             }
@@ -555,3 +590,7 @@ public class App {
         return new Rating(user.getUsername(),songID,rating);
     }
 }
+
+
+/// Reference
+/// TutorialsPoint - Get the Most Frequent Element in an Array in Java

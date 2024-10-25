@@ -321,25 +321,6 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return r;
     }
 
-    private double mapRowRating(ResultSet rs)throws SQLException {
-
-        double r =  rs.getDouble("userRating");
-        return r;
-    }
-
-    private Song mapRowSong(ResultSet rs)throws SQLException {
-
-        Song s = new Song(
-
-                rs.getInt("songID"),
-                rs.getString("songName"),
-                rs.getInt("albumID"),
-                rs.getInt("artistID"),
-                rs.getTime("songLength")
-        );
-        return s;
-    }
-
 
 
 }
