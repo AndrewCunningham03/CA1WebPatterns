@@ -105,7 +105,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
         // TRY to get a statement from the connection
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where songTitle = ?")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where songName = ?")) {
 
             // Fill in the blanks, i.e. parameterize the query
             ps.setString(1, songTitle);

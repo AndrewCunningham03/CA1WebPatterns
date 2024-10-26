@@ -17,7 +17,10 @@ class UserDaoImplTest {
 
     /// TEST FOR REGISTER
 
-
+    /**
+     * Test for Register a user
+     * @throws SQLException is username or email isn't unique
+     */
     @Test
     void registerUser() throws SQLException {
 
@@ -39,9 +42,12 @@ class UserDaoImplTest {
         assertUserEquals(tester, inserted);
     }
 
+    /**
+     * Test for Register a user but user already exist
+     */
     @Test
-    void registerUserButUserMatch(){
-        System.out.println("Test for Register a user");
+    void registerUserButUserNameAlreadyExist(){
+        System.out.println("Test for Register a user but user already exist");
         User tester = new User("Toby","ronaldo@gmail.com","house",1);
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
@@ -52,9 +58,12 @@ class UserDaoImplTest {
 
     }
 
+    /**
+     * Test for Register a user but email isn't unique
+     */
     @Test
     void registerUserButEmailMatch(){
-        System.out.println("Test for Register a user");
+        System.out.println("Test for Register a user but email isn't unique");
         User tester = new User("Ronaldo","toby@gmail.com","house",1);
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
@@ -64,9 +73,26 @@ class UserDaoImplTest {
         assertEquals(incorrectResult, result);
     }
 
-
+    /**
+     * Test for Register a user but password exceeds limits
+     */
     @Test
-    void registerUserButNull() throws SQLException {
+    void registerUserButPasswordExceedsLimit(){
+        System.out.println("Test for Register a user but password exceeds limits");
+        User tester = new User("Ronaldo","ronaldo@gmail.com","yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",1);
+
+        UserDao userDao = new UserDaoImpl("database_test.properties");
+
+        int incorrectResult = -1;
+        int result = userDao.registerUser(tester);
+        assertEquals(incorrectResult, result);
+    }
+
+    /**
+     * Test for Register a user but null
+     */
+    @Test
+    void registerUserButNull() {
 
         System.out.println("Test for Register a user but null");
         User tester = null;
@@ -82,6 +108,10 @@ class UserDaoImplTest {
     }
 
     //// LOGIN TEST
+
+    /**
+     * Test for Login a user
+     */
     @Test
     void loginUser() {
 
@@ -99,6 +129,9 @@ class UserDaoImplTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test for Login a user but not correct Email
+     */
     @Test
     void loginUserButNotCorrectEmail() {
 
@@ -116,6 +149,9 @@ class UserDaoImplTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * est for Login a user but not correct Password
+     */
     @Test
     void loginUserButNotCorrectPassword() {
 
@@ -134,6 +170,9 @@ class UserDaoImplTest {
     }
 
 
+    /**
+     * Test for Login a user but Email is null
+     */
     @Test
     void loginUserButEmailIsNull() {
 
@@ -151,6 +190,10 @@ class UserDaoImplTest {
         assertEquals(expected, result);
     }
 
+
+    /**
+     * Test for Login a user but password is null
+     */
     @Test
     void loginUserButPasswordIsNull() {
 
@@ -170,6 +213,10 @@ class UserDaoImplTest {
 
 
     // FIND BY USERNAME TEST
+
+    /**
+     * Test find user by username
+     */
     @Test
     void findUserByUsername() {
         System.out.println("Test find user by username");
@@ -183,6 +230,9 @@ class UserDaoImplTest {
         assertUserEquals(expected, result);
     }
 
+    /**
+     * Test find user by username but No Match
+     */
     @Test
     void findUserByUsernameButNoMatch() {
         System.out.println("Test find user by username but No Match");
@@ -199,10 +249,14 @@ class UserDaoImplTest {
 
 
     //// TEST EMAILS
-@Test
+
+    /**
+     * Test for Find user by there email
+     */
+    @Test
     void findUserByThereEmail(){
 
-        System.out.println("Find user by there email");
+        System.out.println("Test for Find user by there email");
 
         User expected = new User("Toby","toby@gmail.com","ron",1);
 
@@ -215,11 +269,13 @@ class UserDaoImplTest {
 
     }
 
-
+    /**
+     * Test for Find user by there email when email is not there
+     */
     @Test
     void findUserByThereEmailWhenEmailIsNotThere(){
 
-        System.out.println("Find user by there email when email is not there");
+        System.out.println("Test for Find user by there email when email is not there");
 
         User expected = new User("Toby","yyyy@gmail.com","ron",1);
 
@@ -232,10 +288,13 @@ class UserDaoImplTest {
 
     }
 
+    /**
+     * test for Find user by there email when email is null
+     */
     @Test
     void findUserByThereEmailWhenEmailIsNull(){
 
-        System.out.println("Find user by there email when email is null");
+        System.out.println("test for Find user by there email when email is null");
 
         User expected = new User("Toby",null,"ron",1);
 
@@ -248,7 +307,11 @@ class UserDaoImplTest {
 
     }
 
-
+    /**
+     * Check if two users have the same values
+     * @param u1 is the user being searched
+     * @param u2 is the user being searched
+     */
     private void assertUserEquals(User u1, User u2){
         assertEquals(u1.getUsername(), u2.getUsername());
         assertEquals(u1.getEmail(), u2.getEmail());

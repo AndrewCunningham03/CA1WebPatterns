@@ -18,16 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class RatingDaoImplTest {
     private MySQLDao connectionSource = new MySQLDao("database_test.properties");
 
-    @Test
-    void rateSong() {
-    }
-
-
-
     /// ADDING SONG METHOD
+
+    /**
+     * Test for Adding a rating to the database
+     * @throws SQLException if username or songID doesn't exist
+     */
     @Test
     void implementRatingSong() throws SQLException {
-        System.out.println("Adding a rating to the database");
+        System.out.println(" Test for Adding a rating to the database");
 
         Rating tester = new Rating("Sam",4,5);
 
@@ -48,10 +47,13 @@ class RatingDaoImplTest {
 
     }
 
+    /**
+     * Test for adding a rating to the database but its null
+     */
     @Test
-    void implementRatingSongButNull() throws SQLException {
+    void implementRatingSongButNull() {
 
-        System.out.println("Register a user but null");
+        System.out.println("Test for adding a rating to the database but its null");
         Rating tester = null;
 
 
@@ -64,9 +66,13 @@ class RatingDaoImplTest {
         });
     }
 
+    /**
+     * test for adding a rating but the username doesn't match
+     * @throws SQLException if username or songID doesn't exist
+     */
     @Test
     void implementRatingSongButUserNameDoesntMatch() throws SQLException {
-        System.out.println("username doesnt match when adding Rating");
+        System.out.println("test for adding a rating but the username doesnt match");
 
         Rating tester = new Rating("You",4,5);
 
@@ -78,9 +84,13 @@ class RatingDaoImplTest {
 
     }
 
+    /**
+     * test for adding a rating but the songID doesn't match
+     * @throws SQLException if username or songID doesn't exist
+     */
     @Test
     void implementRatingSongButSongIDDoesntMatch() throws SQLException {
-        System.out.println("username doesnt match when adding Rating");
+        System.out.println("test for adding a rating but the songID doesnt match");
 
         Rating tester = new Rating("Toby",44,5);
 
@@ -95,10 +105,14 @@ class RatingDaoImplTest {
 
 
 //// GET ALL RATINGS
+
+    /**
+     * Test for get all ratings
+     */
     @Test
     void getAllRatings() {
 
-        System.out.println("Test for get all rated songs and rating ");
+        System.out.println("Test for get all ratings ");
         RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
 
         List<Rating> expected = generateAllResults();
@@ -118,6 +132,10 @@ class RatingDaoImplTest {
 
 
     ///TOP RATED SONG METHOD
+
+    /**
+     * Test for get the song with the highest rating average
+     */
     @Test
     void getTopRatedSong() {
 
@@ -135,6 +153,10 @@ class RatingDaoImplTest {
 
     }
 
+
+    /**
+     * Test for get the song with the highest rating average when the expected song isn't the top-rated song
+     */
     @Test
     void getTopRatedSongWhenTheExpectedResultIsNotTheTopRatedSong() {
 
@@ -151,6 +173,9 @@ class RatingDaoImplTest {
 
     }
 
+    /**
+     * Test for get the song with the highest rating average when song is null
+     */
     @Test
     void getTopRatedSongWhenSongIsNull() {
 
@@ -170,10 +195,13 @@ class RatingDaoImplTest {
 
     /// MOST POPULAR SONG METHOD
 
+    /**
+     * test for get which song is the most popular song to be rated by users
+     */
     @Test
     void getMostPopularSong() {
 
-        System.out.println("test for which song is rated is the most popular song to be rated by users");
+        System.out.println("test for get which song is the most popular song to be rated by users");
 
         Time t1 = Time.valueOf("00:04:59");
 
@@ -187,11 +215,13 @@ class RatingDaoImplTest {
 
     }
 
-
+    /**
+     * test for get which song is the most popular song to be rated by users when song doesnt match
+     */
     @Test
     void getMostPopularSongWhenMostPopularSongDoesntMatch() {
 
-        System.out.println("test for which song is rated is the most popular song to be rated by users when songID doesnt match");
+        System.out.println("test for get which song is the most popular song to be rated by users when song doesnt match");
 
         Time t1 = Time.valueOf("00:02:23");
 
@@ -205,11 +235,13 @@ class RatingDaoImplTest {
 
     }
 
-
+    /**
+     * test for get which song is the most popular song to be rated by users when song is Null
+     */
     @Test
     void getMostPopularSongWhenNull() {
 
-        System.out.println("test for which song is rated is the most popular song to be rated by users when song is Null");
+        System.out.println("test for get which song is the most popular song to be rated by users when song is Null");
 
         Song expected = null;
 
@@ -224,6 +256,9 @@ class RatingDaoImplTest {
 
     // GET RATING BY USERNAME AND SONGID METHOD
 
+    /**
+     * test get  rating by username and songID
+     */
     @Test
     void findRatingByUsernameAndSongID(){
 
@@ -238,38 +273,27 @@ class RatingDaoImplTest {
         assertRatingEquals(expected,result);
     }
 
-
+    /**
+     * test get rating by username and songID when no match
+     */
     @Test
-    void findRatingByUsernameAndSongIDForNoMatchForUserName(){
+    void findRatingByUsernameAndSongIDForNoMatch(){
 
-        System.out.println("test get rating by username and songID when no match for username");
-
-        Rating expected = new Rating("yyyy", 1, 1);
+        System.out.println("test get rating by username and songID when no match");
 
         RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
 
-        Rating result = ratingDao.findRatingByUsernameAndSongID(expected.getUsername(), expected.getSongID());
+        Rating result = ratingDao.findRatingByUsernameAndSongID("yyyy", 500);
 
        assertNull(result);
-    }
-
-    @Test
-    void findRatingByUsernameAndSongIDForNoMatchForUserSongID(){
-
-        System.out.println("test get rating by username and songID when no match for username");
-
-        Rating expected = new Rating("Toby", 11, 1);
-
-        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
-
-        Rating result = ratingDao.findRatingByUsernameAndSongID(expected.getUsername(), expected.getSongID());
-
-        assertNull(result);
     }
 
 
     /// GET ALL USER RATING FROM USERNAME
 
+    /**
+     * Test for get all user ratings from username
+     */
     @Test
     void getUserRatingFromUsername(){
 
@@ -294,10 +318,13 @@ class RatingDaoImplTest {
         }
     }
 
+    /**
+     * Test for get all user ratings from username but username doesn't match
+     */
     @Test
     void getUserRatingFromUsernameWhenDoesntMatch(){
 
-        System.out.println("Test for get all user ratings from username");
+        System.out.println("Test for get all user ratings from username but username doesnt match ");
 
         Rating r = new Rating("Toby", 1, 1);
 
@@ -319,14 +346,22 @@ class RatingDaoImplTest {
     }
 
 
-
-
+    /**
+     * Check if two ratings are the same
+     * @param r1 is the rating being searched
+     * @param r2 is the rating being searched
+     */
     private void assertRatingEquals(Rating r1, Rating r2){
         assertEquals(r1.getUsername(),r2.getUsername());
         assertEquals(r1.getSongID(), r2.getSongID());
         assertEquals(r1.getUserRating(), r2.getUserRating());
     }
 
+
+    /**
+     * Adding all ratings to a list
+     * @return list of all ratings
+     */
     List<Rating> generateAllResults(){
         List<Rating> results = new ArrayList<Rating>();
 

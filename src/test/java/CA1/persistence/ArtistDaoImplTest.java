@@ -32,12 +32,47 @@ class ArtistDaoImplTest {
 
         for (int i = 0; i < result.size();i++){
 
-            assertEquals(expected.get(i), result.get(i));
+            assertArtistEquals(expected.get(i), result.get(i));
         }
 
     }
 
 
+    /**
+     * Test for find artist by its ID
+     */
+    @Test
+    void findArtistById(){
+        System.out.println("Test for find artist by its ID");
+        Artist expected = new Artist(2, "Kendrick Lamar", "Hip Hop", "Compton California", new Date("1987/06/17"));
+
+        ArtistDao artistDao = new ArtistDaoImpl("database_test.properties");
+
+        Artist result = artistDao.findArtistById(expected.getArtistID());
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Test or find album by its ID but no match
+     */
+    @Test
+    void findArtistByIdButNoMatch(){
+        System.out.println("Test or find album by its ID but no match");
+        ArtistDao artistDao = new ArtistDaoImpl("database_test.properties");
+
+        Artist result = artistDao.findArtistById(400);
+
+        assertNull(result);
+
+    }
+
+    /**
+     * Check is two artist have the same values
+     * @param expected is the artist being searched
+     * @param result is the artist being searched
+     */
     void assertArtistEquals(Artist expected, Artist result){
         assertEquals(expected.getArtistID(), result.getArtistID());
         assertEquals(expected.getArtistName(),result.getArtistName());
@@ -45,6 +80,12 @@ class ArtistDaoImplTest {
         assertEquals(expected.getHometown(), result.getHometown());
         assertEquals(expected.getDateOfBirth(), result.getDateOfBirth());
     }
+
+
+    /**
+     * Adding all artist to a list
+     * @return list of artist
+     */
     List<Artist> generateAllResults(){
 
         List<Artist> result = new ArrayList<>();
@@ -56,7 +97,7 @@ class ArtistDaoImplTest {
         Artist a5 = new Artist(5, "Prince","RnB/Soul","Minneapolis, Minnesota",new Date("1958/06/07"));
 
         result.add(a1);
-       result.add(a2);
+        result.add(a2);
         result.add(a3);
         result.add(a4);
         result.add(a5);
