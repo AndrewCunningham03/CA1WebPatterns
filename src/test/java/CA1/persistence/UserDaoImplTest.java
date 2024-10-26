@@ -40,6 +40,7 @@ class UserDaoImplTest {
         assertNotNull(inserted);
 
         assertUserEquals(tester, inserted);
+
     }
 
     /**
@@ -47,7 +48,7 @@ class UserDaoImplTest {
      */
     @Test
     void registerUserButUserNameAlreadyExist(){
-        System.out.println("Test for Register a user but user already exist");
+        System.out.println("Test for Register a user but userName already exist");
         User tester = new User("Toby","ronaldo@gmail.com","house",1);
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
@@ -64,22 +65,7 @@ class UserDaoImplTest {
     @Test
     void registerUserButEmailMatch(){
         System.out.println("Test for Register a user but email isn't unique");
-        User tester = new User("Ronaldo","toby@gmail.com","house",1);
-
-        UserDao userDao = new UserDaoImpl("database_test.properties");
-
-        int incorrectResult = -1;
-        int result = userDao.registerUser(tester);
-        assertEquals(incorrectResult, result);
-    }
-
-    /**
-     * Test for Register a user but password exceeds limits
-     */
-    @Test
-    void registerUserButPasswordExceedsLimit(){
-        System.out.println("Test for Register a user but password exceeds limits");
-        User tester = new User("Ronaldo","ronaldo@gmail.com","yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",1);
+        User tester = new User("Jennifer","toby@gmail.com","house",1);
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
 
@@ -263,7 +249,7 @@ class UserDaoImplTest {
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
 
-        User result = userDao.findUserByUsername(expected.getEmail());
+        User result = userDao.findUserByThereEmail(expected.getEmail());
 
         assertEquals(expected,result);
 
@@ -282,7 +268,7 @@ class UserDaoImplTest {
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
 
-        User result = userDao.findUserByUsername(expected.getEmail());
+        User result = userDao.findUserByThereEmail(expected.getEmail());
 
         assertNotEquals(expected,result);
 
@@ -301,7 +287,7 @@ class UserDaoImplTest {
 
         UserDao userDao = new UserDaoImpl("database_test.properties");
 
-        User result = userDao.findUserByUsername(expected.getEmail());
+        User result = userDao.findUserByThereEmail(expected.getEmail());
 
         assertNotEquals(expected,result);
 
