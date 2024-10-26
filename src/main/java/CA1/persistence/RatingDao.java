@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface RatingDao {
 
-    public Rating rateSong();
+
     //public boolean implementRatingSong(Rating rating);
 
     public int implementRatingSong(Rating rating);

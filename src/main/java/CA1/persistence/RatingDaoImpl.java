@@ -12,6 +12,10 @@ import java.util.Scanner;
 
 public class RatingDaoImpl extends MySQLDao implements RatingDao{
 
+    /**
+     * Get the database information
+     * @param databaseName is the database being searched
+     */
     public RatingDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -25,42 +29,12 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
 
-     private static final Scanner keyboard = new Scanner(System.in);
-
+    /**
+     * Add a rating to the database
+     * @param rating is the rating beinmg added
+     * @return 1 if rating was added and -1 if rating was not added
+     */
     @Override
-    public Rating rateSong(){
-
-        System.out.println("Enter username: ");
-        String username = keyboard.nextLine();
-
-        System.out.println("Enter songID");
-        int songID = keyboard.nextInt();
-
-
-        double rating = 0;
-
-        boolean repeat = false;
-
-        while(!repeat){
-
-            System.out.println("Enter song rating: ");
-            rating = keyboard.nextDouble();
-
-            if (rating >=1 && rating <= 5){
-
-                System.out.println("Thank you for the rating ");
-                repeat = true;
-            }else{
-                System.out.println("Number has to be between 1 - 5: ");
-                repeat = false;
-            }
-        }
-
-
-        return new Rating(username,songID,rating);
-    }
-
-@Override
     public int implementRatingSong(Rating rating){
         // DATABASE CODE
         //
@@ -102,7 +76,10 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
 
-
+    /**
+     * Get all the ratings in the database
+     * @return an arraylist of all the ratings
+     */
 
     @Override
     public ArrayList<Rating> getAllRatings(){
@@ -137,6 +114,10 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return rating;
     }
 
+    /**
+     * Get the  Song was the highest average rating in the database
+     * @return the song with the highest average rating in the database
+     */
     @Override
     public Song getTopRatedSong(){
 
@@ -179,7 +160,10 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return songDao.findSongById(rating);
     }
 
-
+    /**
+     * Get the song that is rated the most
+     * @return the song that is rated the most
+     */
     @Override
     public Song getMostPopularSong(){
 
@@ -215,7 +199,12 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return songDao.findSongById(rating);
     }
 
-
+    /**
+     * Get a rating from a particular username and SongID
+     * @param username is the username being searched
+     * @param songID is the songID being searched
+     * @return the rating that matches the username and songID
+     */
     @Override
     public Rating findRatingByUsernameAndSongID(String username, int songID){
 
@@ -257,6 +246,11 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return rating;
     }
 
+    /**
+     * Get an arraylist of all the ratings from a particular user
+     * @param username is the username being searched
+     * @return an arraylist of ratings
+     */
     @Override
     public ArrayList<Rating> getUserRatingFromUsername(String username){
 
@@ -301,9 +295,12 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
 
-
-
-
+    /**
+     * Search through each row in the rating
+     * @param rs is the rating query being searched
+     * @return the rating information
+     * @throws SQLException is username and songID doesnt exist
+     */
 
     private Rating mapRow(ResultSet rs)throws SQLException {
 
@@ -315,6 +312,12 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         return r;
     }
 
+    /**
+     * Search through the songID
+     * @param rs is the query being searched
+     * @return the songID information
+     * @throws SQLException is songID doesnt exist
+     */
     private int mapRow1(ResultSet rs)throws SQLException {
 
         int r =  rs.getInt("songID");
@@ -327,5 +330,5 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
 
 
 
-//// refernce, Find most frequent value in SQL column - stackoverflow
-/// How to validate Visa Card number using Regular Expression - geeksforgeeks
+//// refernce,
+// Find most frequent value in SQL column - stackoverflow - https://stackoverflow.com/questions/12235595/find-most-frequent-value-in-sql-column

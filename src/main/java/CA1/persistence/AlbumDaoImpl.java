@@ -13,6 +13,10 @@ import java.util.List;
 
 public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
+    /**
+     * get the database information from a particular database
+     * @param databaseName is the database being searched
+     */
     public AlbumDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -21,6 +25,12 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
         super();
     }
 
+
+    /**
+     * Get all albums that belong to a particular artistID
+     * @param artistID is the artistId being searched
+     * @return a list of all albums from that particular artistID
+     */
     @Override
     public List<Album> viewAllAlbumsFromArtist(int artistID){
 
@@ -61,6 +71,11 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
     // getAlbumBasedOnAlbumID
 
+    /**
+     * Get the album from a particular albumID
+     * @param albumID is the album being searched
+     * @return the album that matches the albumID
+     */
     @Override
     public Album findAlbumById(int albumID){
 
@@ -103,6 +118,10 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
     // getAllAlbums
 
+    /**
+     * Get all albums and there information in the database
+     * @return an arraylist of all the albums
+     */
     @Override
     public ArrayList<Album> getAllAlbums() {
         // Create variable to hold the customer info from the database
@@ -136,7 +155,12 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
         return albums;
     }
 
-
+    /**
+     * Search through each row on the album
+     * @param rs is the album query being searched
+     * @return the album information
+     * @throws SQLException is albumID isn't unique and artistID doesnt exist
+     */
     private Album mapRow(ResultSet rs)throws SQLException{
 
         Album a = new Album(

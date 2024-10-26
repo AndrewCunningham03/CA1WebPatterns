@@ -14,6 +14,10 @@ import java.util.ArrayList;
 
 public class SongDaoImpl extends MySQLDao implements SongDao{
 
+    /**
+     * Get the information from the database
+     * @param databaseName is the database being searched
+     */
     public SongDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -23,7 +27,11 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
     }
 
 
-
+    /**
+     * Get the Song from a particular songID
+     * @param songID is the songID being searched
+     * @return the song from the particular songID
+     */
     @Override
     public Song findSongById(int songID){
 
@@ -216,7 +224,12 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
     }
 
 
-
+    /**
+     * Search through each row in the song
+     * @param rs is the song query being searched
+     * @return the song information
+     * @throws SQLException if songID isn't unique or if albumID and artistID doesnt exist
+     */
     private Song mapRow(ResultSet rs)throws SQLException {
 
         Song s = new Song(

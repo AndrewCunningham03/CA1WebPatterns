@@ -13,6 +13,10 @@ import java.util.ArrayList;
 public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
 
 
+    /**
+     * Get the database information from a particular database
+     * @param databaseName is the database being searched
+     */
     public ArtistDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -21,7 +25,10 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         super();
     }
 
-
+    /**
+     * get all artist and there information
+     * @return an arraylist of all artist
+     */
     @Override
     public ArrayList<Artist>getAllArtist(){
         ArrayList<Artist> artist = new ArrayList<>();
@@ -56,6 +63,11 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
 
     // get artist based on artist id
 
+    /**
+     * Get the artist from a particular artistID
+     * @param artistID is the artist being searched
+     * @return the artist that is being searched
+     */
     @Override
     public Artist findArtistById(int artistID){
 
@@ -96,7 +108,12 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         return artist;
     }
 
-
+    /**
+     * Search through each row in the artist
+     * @param rs is the artist query being searched
+     * @return the artist information
+     * @throws SQLException if artistId isn't unique
+     */
     private Artist mapRow(ResultSet rs)throws SQLException{
 
         Artist a = new Artist(

@@ -8,8 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 
 public interface UserDao {
 
-    public User createUserRegister() throws InvalidKeySpecException, NoSuchAlgorithmException;
-
   //  public boolean registerUser(User newUser);
 
     public boolean loginUser(String email, String password);

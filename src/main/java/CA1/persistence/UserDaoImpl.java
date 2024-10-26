@@ -20,6 +20,10 @@ import java.util.regex.Pattern;
 public class UserDaoImpl extends MySQLDao implements UserDao{
 
 
+    /**
+     * get the database information from a particular database
+     * @param databaseName is the database being searched
+     */
     public UserDaoImpl(String databaseName){
         super(databaseName);
     }
@@ -31,44 +35,13 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         super();
     }
 
-    private static final Scanner input = new Scanner(System.in);
-    public User createUserRegister() throws InvalidKeySpecException, NoSuchAlgorithmException {
-        System.out.println("Please enter the username:");
-        String userName = input.nextLine();
-
-        String email = null;
-
-        boolean repeat = false;
-
-        while(!repeat){
-
-             System.out.println("Please enter the email with any letter or number before the @ symbol and after the @symbol :");
-             email = input.nextLine();
-
-            Pattern pattern = Pattern.compile("^(.+)@(.+)$");
-            Matcher match = pattern.matcher(email);
-            boolean matchfound = match.find();
-
-            if (matchfound){
-                System.out.println("Correct email details");
-                repeat = true;
-            }else{
-
-                System.out.println("Enter email details again ");
-                repeat = false;
-            }
-        }
-
-        System.out.println("Please enter the password:");
-        String password = input.nextLine();
-
-        System.out.println("Please enter the userType");
-        int userType = input.nextInt();
 
 
-        return new User(userName, email, hashPassword(password), userType);
-    }
-
+    /**
+     * Add a new user to the database
+     * @param newUser is the user being added
+     * @return 1 is user was added and -1 if not added
+     */
     @Override
     public int registerUser(User newUser){
         // DATABASE CODE
@@ -111,7 +84,12 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         return rowsAffected;
     }
 
-
+    /**
+     * Login into the system based on the email and password information matching what's in the database
+     * @param email is the email being searched
+     * @param password is the password being searched
+     * @return true if login was successful and false if not
+     */
     public boolean loginUser(String email, String password)  {
 
 
@@ -158,7 +136,11 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
     }
 
-
+    /**
+     * Get a particular user based on the username
+     * @param username is the user being searched
+     * @return the user from that particular username
+     */
     @Override
     public User findUserByUsername(String username){
 
@@ -198,6 +180,11 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
         return user;
     }
 
+    /**
+     * Get the user of a particular email
+     * @param email is the email being searched
+     * @return the user that has the particular email
+     */
     @Override
     public User findUserByThereEmail(String email){
 
@@ -239,7 +226,13 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
     }
 
 
-
+    /**
+     * Turn the password into a hashed password
+     * @param password is the password to be hashed
+     * @return the hashed password
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     public String hashPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         char[]passwordChars = password.toCharArray();
@@ -261,7 +254,12 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
 
     }
 
-
+    /**
+     * Search through each row in the user
+     * @param rs is the query for user to be searched
+     * @return the user information
+     * @throws SQLException is username and email isn't unique
+     */
     private User mapRow(ResultSet rs)throws SQLException {
 
         User u = new User(
@@ -275,8 +273,8 @@ public class UserDaoImpl extends MySQLDao implements UserDao{
     }
 
 
-    //refernce
+    //reference
 
     // HowToDoItInJava - Java Email Validation using Regex - https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
-
+    /// How to validate Visa Card number using Regular Expression - geeksforgeeks - https://www.geeksforgeeks.org/how-to-validate-visa-card-number-using-regular-expression/
 }
