@@ -165,12 +165,28 @@ public class App {
                     while(!repeat5) {
 
                         try {
+
+                            System.out.println("ArtistID to choose from: ");
+                            ArrayList<Artist> artist = artistDao1.getAllArtist();
+
+                            for (int i = 0; i < artist.size();i++){
+                                System.out.println(artist.get(i).getArtistID());
+                            }
+                            System.out.println("");
+
                             int artistID2;
                             System.out.println("Enter artistID");
                             artistID2 = keyboard.nextInt();
 
-                            System.out.println(artistDao1.findArtistById(artistID2));
-                            repeat5 = true;
+                            for (int i = 0; i < artist.size();i++){
+
+                                if (artist.get(i).getArtistID() == artistID2){
+                                    System.out.println(artistDao1.findArtistById(artistID2));
+                                    repeat5 = true;
+                                }else{
+
+                                }
+                            }
                         }catch (InputMismatchException ex){
                             System.out.println("ArtistID has to be a number");
                             keyboard.next();
@@ -188,15 +204,33 @@ public class App {
                     while(!repeat4) {
 
                         try {
+
+                            ArtistDaoImpl artistDao2 = new ArtistDaoImpl("database.properties");
+
+                            System.out.println("ArtistID to choose from: ");
+                            ArrayList<Artist> artist = artistDao2.getAllArtist();
+
+                            for (int i = 0; i < artist.size();i++){
+                                System.out.println(artist.get(i).getArtistID());
+                            }
+                            System.out.println("");
+
                             int artistID;
                             System.out.println("Enter artistID: ");
                             artistID = keyboard.nextInt();
-                            System.out.println(artistID);
 
-                            List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistID);
+                            ArrayList<Album> album = albumDao.getAllAlbums();
 
-                            System.out.println(albums);
-                            repeat4 = true;
+                            for (int i = 0; i < album.size();i++){
+                                if (album.get(i).getArtistID() == artistID){
+                                    List<Album> albums = albumDao.viewAllAlbumsFromArtist(artistID);
+                                    System.out.println("Artist Album: "+albums);
+
+                                    repeat4 = true;
+                                }else{
+
+                                }
+                            }
                         }catch (InputMismatchException ex){
 
                             System.out.println("ArtistID has to be a number");
@@ -217,12 +251,26 @@ public class App {
                     while(!repeat7) {
 
                         try {
+                            ArrayList<Album> album = albumDao3.getAllAlbums();
+
+                            System.out.println("Choose from these albumIDs: ");
+                            for (int i = 0; i < album.size();i++){
+                                System.out.println(album.get(i).getAlbumID());
+                            }
+                            System.out.println("");
+
                             int albumID;
                             System.out.println("Enter albumID: ");
                             albumID = keyboard.nextInt();
 
-                            System.out.println(albumDao3.findAlbumById(albumID));
-                            repeat7 = true;
+                            for (int i = 0; i < album.size();i++){
+                                if (album.get(i).getAlbumID() == albumID){
+                                    System.out.println(albumDao3.findAlbumById(albumID));
+                                    repeat7 = true;
+                                }else{
+
+                                }
+                            }
                         }catch (InputMismatchException ex){
                             System.out.println("Album ID has to be a number");
                             keyboard.next();
@@ -250,12 +298,25 @@ public class App {
 
                     while(!repeat8) {
                         try {
+
+                            ArrayList<Song> song = songDao.getAllSongs();
+                            System.out.println("Choose between these songIDs: ");
+
+                            for (int i = 0;i < song.size();i++){
+                                System.out.println(song.get(i).getSongID());
+                            }
+
                             int songID;
                             System.out.println("Enter songID: ");
                             songID = keyboard.nextInt();
 
-                            System.out.println(songDao.findSongById(songID));
-                            repeat8 = true;
+                            for (int i = 0; i < song.size();i++){
+                                if (song.get(i).getSongID() == songID){
+                                    System.out.println(songDao.findSongById(songID));
+                                    repeat8 = true;
+                                }
+                            }
+
                         }catch(InputMismatchException ex){
                             System.out.println("SongID has to be a number ");
                             keyboard.next();
@@ -569,6 +630,7 @@ public class App {
         for (int i = 0; i < list.size();i++){
             System.out.println(list.get(i).getSongID());
         }
+        System.out.println("");
 
 
         System.out.println("Enter songID");
