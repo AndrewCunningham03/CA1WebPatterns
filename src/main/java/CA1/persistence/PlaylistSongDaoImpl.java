@@ -58,69 +58,7 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
         }
 
     }
-    public boolean addNewSongToPlaylistUser(User user){
 
-        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
-
-        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
-
-        int playlistID = 0;
-        boolean found2 = false;
-        while(!found2) {
-
-            try {
-                System.out.println("Enter Playlist ID");
-                playlistID = keyboard.nextInt();
-
-                for (int i = 0; i < playlists.size();i++){
-                    if (playlists.get(i).getPlaylistID() == playlistID){
-
-                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
-                            found2 = true;
-                        }
-
-                    }
-                }
-            }catch (InputMismatchException ex){
-                System.out.println("Playlist id has to be a number");
-                keyboard.next();
-                found2 = false;
-            }
-        }
-
-        SongDao songDao1 = new SongDaoImpl("database.properties");
-
-        ArrayList<Song> song = songDao1.getAllSongs();
-        int songID = 0;
-        boolean found = false;
-        while(!found) {
-            try {
-                System.out.println("Enter Song ID");
-                songID = keyboard.nextInt();
-
-
-                for (int i = 0; i < song.size();i++){
-                    if (song.get(i).getSongID() == songID){
-
-                        found = true;
-                    }
-                }
-            }catch (InputMismatchException ex){
-                System.out.println("SongID has to be a number");
-                keyboard.next();
-                found = false;
-            }
-        }
-
-
-        PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
-
-        boolean done = addNewSongToPlaylist(playlistSong);
-        if(done){
-            System.out.println("SongId: "+songID+" has been add to playlistID: "+ playlistID);
-        }
-        return done;
-    }
     public boolean removingSongFromPlayList(PlaylistSong playlistSong){
         int rowsAffected = 0;
 
@@ -147,67 +85,6 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
             return true;
         }
 
-    }
-    public boolean removeSongFromPlaylistUser(User user){
-
-        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
-
-        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
-
-        int playlistID = 0;
-        boolean found2 = false;
-        while(!found2) {
-
-            try {
-                System.out.println("Enter Playlist ID");
-                playlistID = keyboard.nextInt();
-
-                for (int i = 0; i < playlists.size();i++){
-                    if (playlists.get(i).getPlaylistID() == playlistID){
-
-                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
-                            found2 = true;
-                        }
-
-                    }
-                }
-            }catch (InputMismatchException ex){
-                System.out.println("Playlist id has to be a number");
-                keyboard.next();
-                found2 = false;
-            }
-        }
-
-        ArrayList<PlaylistSong> playlistSongs = getPlaylistsByID(playlistID);
-        int songID = 0;
-        boolean found = false;
-        while(!found) {
-            try {
-                System.out.println("Enter Song ID");
-                songID = keyboard.nextInt();
-
-
-                for (int i = 0; i < playlistSongs.size();i++){
-                    if (playlistSongs.get(i).getSongID() == songID){
-
-                        found = true;
-                    }
-                }
-            }catch (InputMismatchException ex){
-                System.out.println("SongID has to be a number");
-                keyboard.next();
-                found = false;
-            }
-        }
-
-
-        PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
-
-        boolean done = removingSongFromPlayList(playlistSong);
-        if(done){
-            System.out.println("SongId: "+songID+" has been removed from playlistID: "+ playlistID);
-        }
-        return done;
     }
 
     public ArrayList<PlaylistSong> getPlaylistsByID(int playlistID){

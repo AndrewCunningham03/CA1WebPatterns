@@ -456,7 +456,7 @@ public class App {
             array4[2] = "3. Add a song to PlayList";
             array4[3] = "4. Remove song from Playlist";
             array4[4] = "5. Change playlist name";
-            array4[5] = "6. Exit";
+            array4[5] = "6. View all songs in playlist";
             array4[6] = "7. Exit";
             for (int i = 0; i < array4.length; i++) {
                 System.out.println(array4[i]);
@@ -468,22 +468,22 @@ public class App {
             }
             switch (num4){
                 case 1:
-                    ArrayList<Playlist> allPlaylists = playlistDao.getAllPlaylistsUser(user);
+                    ArrayList<Playlist> allPlaylists = getAllPlaylistsUser();
                     for (Playlist p: allPlaylists){
                         System.out.println("Playlist: " +p);
                     }
                     break;
                 case 2 :
-                    playlistDao.createPlaylist(user);
+                    createPlaylist();
                     break;
                 case 3:
-                    playlistSongDao.addNewSongToPlaylistUser(user);
+                    addNewSongToPlaylistUser();
                     break;
                 case 4:
-                    playlistSongDao.removeSongFromPlaylistUser(user);
+                    removeSongFromPlaylistUser();
                     break;
                 case 5:
-                    playlistDao.updatePlaylistNameUser(user);
+                    updatePlaylistNameUser();
                     break;
                 case 6:
                     viewSongsInPlaylist();
@@ -589,7 +589,215 @@ public class App {
 
         return new Rating(user.getUsername(),songID,rating);
     }
+
+    static void removeSongFromPlaylistUser(){
+
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
+
+        PlaylistSongDao playlistSongDao1 = new PlaylistSongDaoImpl("database.properties");
+
+        int playlistID = 0;
+        boolean found2 = false;
+        while(!found2) {
+
+            try {
+                System.out.println("Enter Playlist ID");
+                playlistID = keyboard.nextInt();
+
+                for (int i = 0; i < playlists.size();i++){
+                    if (playlists.get(i).getPlaylistID() == playlistID){
+
+                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                            found2 = true;
+                        }
+
+                    }
+                }
+            }catch (InputMismatchException ex){
+                System.out.println("Playlist id has to be a number");
+                keyboard.next();
+                found2 = false;
+            }
+        }
+
+        ArrayList<PlaylistSong> playlistSongs = playlistSongDao1.getPlaylistsByID(playlistID);
+        int songID = 0;
+        boolean found = false;
+        while(!found) {
+            try {
+                System.out.println("Enter Song ID");
+                songID = keyboard.nextInt();
+
+
+                for (int i = 0; i < playlistSongs.size();i++){
+                    if (playlistSongs.get(i).getSongID() == songID){
+
+                        found = true;
+                    }
+                }
+            }catch (InputMismatchException ex){
+                System.out.println("SongID has to be a number");
+                keyboard.next();
+                found = false;
+            }
+        }
+
+
+        PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
+
+        boolean done = playlistSongDao1.removingSongFromPlayList(playlistSong);
+        if(done){
+            System.out.println("SongId: "+songID+" has been removed from playlistID: "+ playlistID);
+        }else{
+            System.out.println("Song has not been removed please try again later.");
+        }
+    }
+
+
+    static void addNewSongToPlaylistUser(){
+
+        PlaylistSongDao playlistSongDao1 = new PlaylistSongDaoImpl("database.properties");
+
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+
+        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
+
+        int playlistID = 0;
+        boolean found2 = false;
+        while(!found2) {
+
+            try {
+                System.out.println("Enter Playlist ID");
+                playlistID = keyboard.nextInt();
+
+                for (int i = 0; i < playlists.size();i++){
+                    if (playlists.get(i).getPlaylistID() == playlistID){
+
+                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                            found2 = true;
+                        }
+
+                    }
+                }
+            }catch (InputMismatchException ex){
+                System.out.println("Playlist id has to be a number");
+                keyboard.next();
+                found2 = false;
+            }
+        }
+
+        SongDao songDao1 = new SongDaoImpl("database.properties");
+
+        ArrayList<Song> song = songDao1.getAllSongs();
+        int songID = 0;
+        boolean found = false;
+        while(!found) {
+            try {
+                System.out.println("Enter Song ID");
+                songID = keyboard.nextInt();
+
+
+                for (int i = 0; i < song.size();i++){
+                    if (song.get(i).getSongID() == songID){
+
+                        found = true;
+                    }
+                }
+            }catch (InputMismatchException ex){
+                System.out.println("SongID has to be a number");
+                keyboard.next();
+                found = false;
+            }
+        }
+
+
+        PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
+
+        boolean done = playlistSongDao1.addNewSongToPlaylist(playlistSong);
+        if(done){
+            System.out.println("SongId: "+songID+" has been add to playlistID: "+ playlistID);
+        }else{
+            System.out.println("Song has not been added. Try again later");
+        }
+    }
+    static void createPlaylist(){
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.println("Enter playlist name");
+        String playlistName = keyboard.next();
+
+        boolean status = false;
+        System.out.println("Would you like playlist to be public? yes or no");
+        String answer = keyboard.next();
+        if (answer.equalsIgnoreCase("no")){
+            status=true;
+        }
+
+        String userName = user.getUsername();
+        int ID = playlistDao1.numberOfPlaylists()+1;
+
+        Playlist playlist = new Playlist(ID,playlistName,userName,status);
+
+        boolean complete = playlistDao1.insertNewPlaylists(playlist);
+
+        if(!complete){
+            System.out.println("Playlist couldn't be created please try again");
+        }else{
+            System.out.println("Playlist couldnt be created please try again");
+        }
+    }
+    static void updatePlaylistNameUser(){
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+        ArrayList<Playlist> playlists = new ArrayList<>();
+        playlists = playlistDao1.getAllPlaylists();
+        String playlistname = null;
+        boolean found2 = false;
+        while(!found2) {
+
+            System.out.println("Enter Playlist name of playlist you want to change");
+            playlistname = keyboard.nextLine();
+
+            for (int i = 0; i < playlists.size();i++){
+                if (playlists.get(i).getPlaylistName().equalsIgnoreCase(playlistname)){
+
+                    if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                        found2 = true;
+                    }else{
+                        System.out.println("Name given not found please re-enter");
+                        keyboard.nextLine();
+                        found2 =false;
+                    }
+
+                }
+            }
+        }
+        System.out.println("Enter the new name you would like to call it");
+        String newName = keyboard.next();
+        boolean done = playlistDao1.updatePlaylistName(playlistname,newName);
+        if(done){
+            System.out.println("Playlist name has been change to "+newName);
+        }else{
+            System.out.println("Playlist name couldnt be changed. Please try again later");
+        }
+    }
+    static ArrayList<Playlist> getAllPlaylistsUser(){
+        PlaylistDao playlistDao1 = new PlaylistDaoImpl("database.properties");
+        ArrayList<Playlist> playlists = playlistDao1.getAllPlaylists();
+        ArrayList<Playlist> playlistsForUser = new ArrayList<>();
+
+        for(int i = 0; i<playlists.size();i++){
+            if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
+                playlistsForUser.add(playlists.get(i));
+            }
+        }
+        return playlistsForUser;
+    }
 }
+
+
 
 
 /// Reference

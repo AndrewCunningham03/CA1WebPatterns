@@ -7,13 +7,8 @@ import java.util.ArrayList;
 
 public interface PlaylistDao  {
     public ArrayList<Playlist> getAllPlaylists();
-
+    public boolean updatePlaylistName(String playlistName, String name);
     public int numberOfPlaylists();
     public boolean insertNewPlaylists(Playlist newPlaylist);
-
-    public boolean createPlaylist(User user);
     public Playlist getPlaylistsByID(int playlistID);
-    public boolean updatePlaylistNameUser(User user);
-    public ArrayList<Playlist> getAllPlaylistsUser(User user);
-
 }

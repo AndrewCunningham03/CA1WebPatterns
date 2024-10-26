@@ -134,36 +134,6 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
     }
 
-        public boolean createPlaylist(User user){
-
-            Scanner keyboard = new Scanner(System.in);
-
-            System.out.println("Enter playlist name");
-            String playlistName = keyboard.next();
-
-            boolean status = false;
-            System.out.println("Would you like playlist to be public? yes or no");
-            String answer = keyboard.next();
-            if (answer.equalsIgnoreCase("no")){
-                status=true;
-            }
-
-            String userName = user.getUsername();
-            int ID = numberOfPlaylists()+1;
-
-            Playlist playlist = new Playlist(ID,playlistName,userName,status);
-
-            boolean complete = insertNewPlaylists(playlist);
-
-            if(!complete){
-                System.out.println("Playlist couldn't be created please try again");
-                return complete;
-            }
-
-            System.out.println("Playlist: "+playlistName+" has been created");
-            return complete;
-        }
-
     public boolean updatePlaylistName(String playlistName, String name) throws RuntimeException {
         int rowsAffected = 0;
 
@@ -191,57 +161,6 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             return true;
         }
     }
-
-    public boolean updatePlaylistNameUser(User user){
-        ArrayList<Playlist> playlists = new ArrayList<>();
-        playlists = getAllPlaylists();
-        String playlistname = null;
-        boolean found2 = false;
-        while(!found2) {
-
-                System.out.println("Enter Playlist name of playlist you want to change");
-                playlistname = keyboard.nextLine();
-
-                for (int i = 0; i < playlists.size();i++){
-                    if (playlists.get(i).getPlaylistName().equalsIgnoreCase(playlistname)){
-
-                        if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
-                            found2 = true;
-                        }else{
-                            System.out.println("Name given not found please re-enter");
-                            keyboard.nextLine();
-                            found2 =false;
-                        }
-
-                    }
-                }
-        }
-        System.out.println("Enter the new name you would like to call it");
-        String newName = keyboard.next();
-        boolean done = updatePlaylistName(playlistname,newName);
-        if(done){
-            System.out.println("Playlist name has been change to "+newName);
-        }
-        return done;
-
-    }
-
-    public ArrayList<Playlist> getAllPlaylistsUser(User user){
-        ArrayList<Playlist> playlists = getAllPlaylists();
-        ArrayList<Playlist> playlistsForUser = new ArrayList<>();
-
-        for(int i = 0; i<playlists.size();i++){
-            if (playlists.get(i).isStatusPrivate() == false || playlists.get(i).getUsername().equals(user.getUsername())){
-                playlistsForUser.add(playlists.get(i));
-            }
-        }
-        return playlistsForUser;
-    }
-
-
-
-
-
     private Playlist mapRow(ResultSet rs)throws SQLException{
 
         Playlist a = new Playlist(
