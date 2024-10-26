@@ -25,7 +25,7 @@ public class App {
 
 
 
-        UserDao userDao = new UserDaoImpl("database.properties");
+
 
         /// login and register
 
@@ -57,6 +57,8 @@ public class App {
 
                 case 1:
 
+                    UserDao userDao = new UserDaoImpl("database.properties");
+
                     boolean repeat = false;
 
                     while(!repeat){
@@ -80,11 +82,12 @@ public class App {
                         }
                     }
 
-                    System.out.println(userDao.registerUser(userDao.createUserRegister()));
+                    System.out.println(userDao.registerUser(createUserRegister()));
 
                     break;
 
                 case 2:
+                    UserDao userDao1 = new UserDaoImpl("database.properties");
 
                     String email;
                     System.out.println("Enter email: ");
@@ -94,10 +97,10 @@ public class App {
                     System.out.println("Enter password: ");
                     password = keyboard.next();
 
-                    System.out.println(result = userDao.loginUser(email,hashPassword(password)));
+                    System.out.println(result = userDao1.loginUser(email,hashPassword(password)));
                     if(result == true){
 
-                        User loggedInUser = new User(userDao.findUserByThereEmail(email));
+                        User loggedInUser = new User(userDao1.findUserByThereEmail(email));
 
                         user = loggedInUser;
                     }
@@ -121,8 +124,8 @@ public class App {
             array2[2] = "3. View all albums for an artist";
             array2[3] = "4. Search for album by albumID";
             array2[4] = "5. View all albums in the library";
-            array2[5] = "6. View all songs in an album";
-            array2[6] = "7. Search for song by songID";
+            array2[5] = "6. Search for Song by SongID";
+            array2[6] = "7. View all songs in an album";
             array2[7] = "8. Search for song by artist";
             array2[8] = "9. Search for song by album";
             array2[9] = "10. Search for song by title";
@@ -316,7 +319,6 @@ public class App {
 
                     RatingDao  ratingDao2 = new RatingDaoImpl("database.properties");
 
-
                     System.out.println(ratingDao2.implementRatingSong(rateSong()));
 
                     break;
@@ -340,9 +342,7 @@ public class App {
                     while(!repeat2) {
 
                         try {
-                          //  String username;
-                           // System.out.println("Enter username: ");
-                           // username = keyboard.next();
+
 
                             int songID = 0;
                             System.out.println("Enter songID: ");
@@ -561,8 +561,15 @@ public class App {
 
     public static Rating rateSong(){
 
-     //   System.out.println("Enter username: ");
-      //  String username = keyboard.nextLine();
+        SongDaoImpl songDao2 = new SongDaoImpl("database.properties");
+
+        ArrayList<Song> list = songDao2.getAllSongs();
+
+        System.out.println("Choose between these songIDs to rate: ");
+        for (int i = 0; i < list.size();i++){
+            System.out.println(list.get(i).getSongID());
+        }
+
 
         System.out.println("Enter songID");
         int songID = keyboard.nextInt();
@@ -589,6 +596,44 @@ public class App {
 
 
         return new Rating(user.getUsername(),songID,rating);
+    }
+
+    private static final Scanner input = new Scanner(System.in);
+    public static  User createUserRegister() throws InvalidKeySpecException, NoSuchAlgorithmException {
+        System.out.println("Please enter the username:");
+        String userName = input.nextLine();
+
+        String email = null;
+
+        boolean repeat = false;
+
+        while(!repeat){
+
+            System.out.println("Please enter the email with any letter or number before the @ symbol and after the @symbol :");
+            email = input.nextLine();
+
+            Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+            Matcher match = pattern.matcher(email);
+            boolean matchfound = match.find();
+
+            if (matchfound){
+                System.out.println("Correct email details");
+                repeat = true;
+            }else{
+
+                System.out.println("Enter email details again ");
+                repeat = false;
+            }
+        }
+
+        System.out.println("Please enter the password:");
+        String password = input.nextLine();
+
+        System.out.println("Please enter the userType");
+        int userType = input.nextInt();
+
+
+        return new User(userName, email, hashPassword(password), userType);
     }
 
     static void removeSongFromPlaylistUser(){
@@ -843,4 +888,4 @@ public class App {
 
 
 /// Reference
-/// TutorialsPoint - Get the Most Frequent Element in an Array in Java
+/// TutorialsPoint - Get the Most Frequent Element in an Array in Java - https://www.tutorialspoint.com/get-the-most-frequent-element-in-an-array-in-java
