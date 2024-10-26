@@ -9,6 +9,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -263,10 +264,10 @@ public class App {
                     System.out.println("");
                     break;
                 case 8:
-                    System.out.println("");
+                    getSongsByArtist();
                     break;
                 case 9:
-                    System.out.println("");
+                    getSongsByAlbum();
                     break;
                 case 10:
                     System.out.println("");
@@ -794,6 +795,47 @@ public class App {
             }
         }
         return playlistsForUser;
+    }
+
+    static void getSongsByArtist(){
+        SongDaoImpl songDao = new SongDaoImpl("Database.properties");
+        int artistID = 0;
+        try{
+            System.out.println("Enter artist id you would like to search by");
+            artistID = keyboard.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println(LocalDateTime.now()+"Please enter a number"+e);
+        }
+        ArrayList<Song> songsByArtist = songDao.getSongByArtist(artistID);
+
+        if(songsByArtist.isEmpty()){
+            System.out.println("No songs found for this artist");
+        }
+
+        for (Song s: songsByArtist){
+            System.out.println("Song: " +s);
+        }
+
+    }
+    static void getSongsByAlbum(){
+        SongDaoImpl songDao = new SongDaoImpl("Database.properties");
+        int albumID = 0;
+        try{
+            System.out.println("Enter album id you would like to search by");
+            albumID = keyboard.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println(LocalDateTime.now()+"Please enter a number"+e);
+        }
+        ArrayList<Song> songsByArtist = songDao.getSongByAlbum(albumID);
+
+        if(songsByArtist.isEmpty()){
+            System.out.println("No songs found for this album");
+        }
+
+        for (Song s: songsByArtist){
+            System.out.println("Song: " +s);
+        }
+
     }
 }
 

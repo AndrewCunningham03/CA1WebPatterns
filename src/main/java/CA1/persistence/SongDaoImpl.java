@@ -134,6 +134,86 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
         }
         return song;
     }
+    //by artist
+    @Override
+    public ArrayList<Song> getSongByArtist(int artistID){
+
+        ArrayList<Song> song = new ArrayList<>();
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where artist = ?")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setInt(1, artistID);
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                while(rs.next()){
+
+                    Song s = mapRow(rs);
+                    song.add(s);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return song;
+    }
+    //by artist
+    @Override
+    public ArrayList<Song> getSongByAlbum(int albumID){
+
+        ArrayList<Song> song = new ArrayList<>();
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where album = ?")) {
+
+            // Fill in the blanks, i.e. parameterize the query
+            ps.setInt(1, albumID);
+
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+                while(rs.next()){
+
+                    Song s = mapRow(rs);
+                    song.add(s);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+        return song;
+    }
 
 
 
