@@ -345,6 +345,43 @@ class RatingDaoImplTest {
         }
     }
 
+    /// Lowest rated Song
+
+    /**
+     * Test for get the song with the lowest average rating
+     */
+    @Test
+    void getLowestRatedSong() {
+        System.out.println("Test for get the song with the lowest average rating");
+
+        Time t1 = Time.valueOf("00:04:59");
+
+        Song expected = new Song(1,"Come on", 1, 1, t1 );
+
+        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
+
+        Song result = ratingDao.getLowestRatedSong();
+
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Test for get the song with the lowest average rating when song doesn't match the expected value
+     */
+    @Test
+    void getLowestRatedSongWhenSongDoesntMatchExpectedValue() {
+        System.out.println("Test for get the song with the lowest average rating when song doesnt match the expected value");
+
+        Time t1 = Time.valueOf("00:02:23");
+
+        Song expected = new Song(3, "Meh", 4, 3, t1);
+
+        RatingDao ratingDao = new RatingDaoImpl("database_test.properties");
+
+        Song result = ratingDao.getLowestRatedSong();
+
+        assertNotEquals(expected,result);
+    }
 
     /**
      * Check if two ratings are the same
@@ -386,5 +423,6 @@ class RatingDaoImplTest {
 
         return results;
     }
+
 
 }

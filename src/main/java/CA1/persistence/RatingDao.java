@@ -15,6 +15,7 @@ public interface RatingDao {
     public ArrayList<Rating> getAllRatings();
 
     public Song getTopRatedSong();
+    public Song getLowestRatedSong();
 
     public Song getMostPopularSong();
     public Rating findRatingByUsernameAndSongID(String username, int songID);

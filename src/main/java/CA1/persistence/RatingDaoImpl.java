@@ -115,8 +115,8 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
     }
 
     /**
-     * Get the  Song was the highest average rating in the database
-     * @return the song with the highest average rating in the database
+     * Get the Song that has the highest average rating
+     * @return the song with the highest average rating
      */
     @Override
     public Song getTopRatedSong(){
@@ -133,6 +133,55 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao{
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
         try (PreparedStatement ps = conn.prepareStatement("SELECT songID from rating GROUP BY songID ORDER BY AVG(userRating) DESC LIMIT 1")) {
+            // TRY to execute the query
+            try (ResultSet rs = ps.executeQuery()) {
+                // Extract the information from the result set
+                // Use extraction method to avoid code repetition!
+
+                if (rs.next()) {
+                    rating = mapRow1(rs);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("SQL Exception occurred when executing SQL or processing results.");
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred when attempting to prepare SQL for execution");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            // Close the connection using the superclass method
+            super.freeConnection(conn);
+        }
+
+
+        return songDao.findSongById(rating);
+    }
+
+
+    // LowestRatedSong
+
+    /**
+     * Get the Song that has the lowest average rating
+     * @return the song with the lowest average rating
+     */
+    @Override
+    public Song getLowestRatedSong(){
+
+
+        SongDao songDao = new SongDaoImpl("database.properties");
+
+        int rating = 0;
+
+
+        // Get a connection using the superclass
+        Connection conn = super.getConnection();
+        // TRY to get a statement from the connection
+        // When you are parameterizing the query, remember that you need
+        // to use the ? notation (so you can fill in the blanks later)
+        try (PreparedStatement ps = conn.prepareStatement("SELECT songID from rating GROUP BY songID ORDER BY AVG(userRating) ASC LIMIT 1")) {
             // TRY to execute the query
             try (ResultSet rs = ps.executeQuery()) {
                 // Extract the information from the result set

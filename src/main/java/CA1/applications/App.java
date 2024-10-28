@@ -352,8 +352,8 @@ public class App {
 
         int num3 = 0;
 
-        while(num3 != 7){
-            String [] array3 = new String[7];
+        while(num3 != 8){
+            String [] array3 = new String[8];
 
             array3[0] = "1. Rate a song from 1-5";
             array3[1] = "2. Select a particular song you have rated and see the rating with the song ";
@@ -361,7 +361,8 @@ public class App {
             array3[3] = "4. Get the most popular song";
             array3[4] = "5. View all songs you have rated and there rating";
             array3[5] = "6. Get most popular song that are in playlist";
-            array3[6] = "7. Exit";
+            array3[6] = "7. Get the song with the lowest average rating";
+            array3[7] = "8. Exit";
 
             for (int i = 0; i < array3.length; i++) {
                 System.out.println(array3[i]);
@@ -497,6 +498,11 @@ public class App {
 
                     break;
                 case 7:
+                    RatingDao  ratingDao6 = new RatingDaoImpl("database.properties");
+
+                    System.out.println(ratingDao6.getLowestRatedSong());
+                    break;
+                case 8:
                     break;
 
             }
