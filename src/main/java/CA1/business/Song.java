@@ -3,6 +3,10 @@ package CA1.business;
 import java.sql.Time;
 import java.util.Objects;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class Song {
 
     private int songID;

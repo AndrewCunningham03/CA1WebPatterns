@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * @author Toby
+ */
 public class RatingDaoImpl extends MySQLDao implements RatingDao{
 
     /**

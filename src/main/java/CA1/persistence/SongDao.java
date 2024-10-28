@@ -4,6 +4,10 @@ import CA1.business.Song;
 
 import java.util.ArrayList;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public interface SongDao {
 
     public Song findSongById(int songID);

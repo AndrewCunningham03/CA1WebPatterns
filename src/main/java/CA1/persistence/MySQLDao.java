@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class MySQLDao {
     private Properties properties;
     private Connection conn;

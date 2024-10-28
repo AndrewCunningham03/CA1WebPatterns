@@ -15,6 +15,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Toby
+ */
 class RatingDaoImplTest {
     private MySQLDao connectionSource = new MySQLDao("database_test.properties");
 

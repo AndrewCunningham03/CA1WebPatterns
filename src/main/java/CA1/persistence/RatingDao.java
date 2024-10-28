@@ -5,6 +5,9 @@ import CA1.business.Song;
 
 import java.util.ArrayList;
 
+/**
+ * @author Toby
+ */
 public interface RatingDao {
 
 

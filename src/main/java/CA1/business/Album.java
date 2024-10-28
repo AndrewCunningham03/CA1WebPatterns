@@ -4,6 +4,10 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class Album {
     private int albumID;
     private String albumName;

@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
+
 public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
     /**

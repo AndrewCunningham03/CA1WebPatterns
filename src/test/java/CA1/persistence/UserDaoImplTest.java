@@ -9,6 +9,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Toby
+ */
 class UserDaoImplTest {
 
     private MySQLDao connectionSource = new MySQLDao("database_test.properties");

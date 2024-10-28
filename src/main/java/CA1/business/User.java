@@ -2,6 +2,9 @@ package CA1.business;
 
 import java.util.Objects;
 
+/**
+ * @author Toby
+ */
 public class User {
 
     private String username;

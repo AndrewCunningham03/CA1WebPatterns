@@ -6,6 +6,9 @@ import CA1.business.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * @author Toby
+ */
 public interface UserDao {
 
   //  public boolean registerUser(User newUser);

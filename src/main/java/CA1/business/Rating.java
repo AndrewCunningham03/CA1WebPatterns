@@ -2,6 +2,9 @@ package CA1.business;
 
 import java.util.Objects;
 
+/**
+ * @author Toby
+ */
 public class Rating {
     private String username;
     private int songID;

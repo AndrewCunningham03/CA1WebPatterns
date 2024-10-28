@@ -17,6 +17,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Toby
+ */
 public class UserDaoImpl extends MySQLDao implements UserDao{
 
 

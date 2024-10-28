@@ -14,6 +14,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class App {
 
     static User user = new User();
