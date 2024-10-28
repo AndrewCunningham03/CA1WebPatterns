@@ -1042,5 +1042,9 @@ public class App {
 
 
 
-/// Reference
+/// References
 /// TutorialsPoint - Get the Most Frequent Element in an Array in Java - https://www.tutorialspoint.com/get-the-most-frequent-element-in-an-array-in-java
+/// DKIT Moodle - Security For Software Developers - https://2324-moodle.dkit.ie/my/
+/// DKIT Moodle - Web Patterns - In Class Code - https://github.com/mgraham-dkit/InClass_WebPatterns2024
+/// DKIT Moodle - Web Patterns - Slide Examples - https://github.com/mgraham-dkit/WebPatternsSlideExamples
+/// DKIT Moodle - Web Patterns - Sample Spring Boot App - https://github.com/mgraham-dkit/SampleSpringApp
