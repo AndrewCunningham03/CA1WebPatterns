@@ -1,7 +1,10 @@
 package CA1.business;
 
 import java.util.Objects;
-
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class PlaylistSong {
 
     private int playlistID;

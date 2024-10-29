@@ -5,7 +5,9 @@ import CA1.business.PlaylistSong;
 import CA1.business.User;
 
 import java.util.ArrayList;
-
+/**
+ * @author Andrew Cunningham
+ */
 public interface PlaylistSongDao {
 
     public boolean addNewSongToPlaylist(PlaylistSong song);

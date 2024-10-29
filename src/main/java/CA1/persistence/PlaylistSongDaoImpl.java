@@ -17,20 +17,22 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
-
-    Scanner keyboard = new Scanner(System.in);
-
-    SongDaoImpl songDao = new SongDaoImpl("database.properties");
-
-    PlaylistDaoImpl playlistDao = new PlaylistDaoImpl("database.properties");
     public PlaylistSongDaoImpl(String databaseName){
         super(databaseName);
     }
-
+    public PlaylistSongDaoImpl(Connection conn){
+        super(conn);
+    }
     public PlaylistSongDaoImpl(){
         super();
     }
 
+    /**
+     * Adds a song to playlistsong
+     * @param song song we will be adding
+     * @return true if it has been added, false if it hasn't been added.
+     */
+    @Override
     public boolean addNewSongToPlaylist(PlaylistSong song){
         int rowsAffected = 0;
 
@@ -59,6 +61,12 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
 
     }
 
+    /**
+     * Removes a song from playlistsongs
+     * @param playlistSong the playlist song we will be deleting
+     * @return true if it has been removed, false if it hasn't been removed
+     */
+    @Override
     public boolean removingSongFromPlayList(PlaylistSong playlistSong){
         int rowsAffected = 0;
 
@@ -87,6 +95,12 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
 
     }
 
+    /**
+     * Getting all the playlist songs for given playlist id
+     * @param playlistID the playlist id we will be searching with
+     * @return arraylist of playlistsongs for the given playlist id
+     */
+    @Override
     public ArrayList<PlaylistSong> getPlaylistsByID(int playlistID){
         ArrayList<PlaylistSong> playlistSongs = new ArrayList<>();
 
@@ -116,7 +130,11 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
         return playlistSongs;
     }
 
-
+    /**
+     * Gets all the playlistsongs in the database
+     * @return arraylist of playlistsongs
+     */
+    @Override
     public ArrayList<PlaylistSong> getAllPlaylistSongs(){
         ArrayList<PlaylistSong> playlists = new ArrayList<>();
 
@@ -145,6 +163,12 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
         return playlists;
     }
 
+    /**
+     * Maps the current row of the ResultSet to a PlaylistSong object.
+     * @param rs the ResultSet to map from
+     * @return a PlaylistSong object containing data from the current ResultSet row
+     * @throws SQLException if a database access error occurs
+     */
     private PlaylistSong mapRow(ResultSet rs)throws SQLException{
 
         PlaylistSong a = new PlaylistSong(

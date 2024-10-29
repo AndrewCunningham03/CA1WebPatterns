@@ -5,6 +5,9 @@ import CA1.business.User;
 
 import java.util.ArrayList;
 
+/**
+ * @author Andrew Cunningham
+ */
 public interface PlaylistDao  {
     public ArrayList<Playlist> getAllPlaylists();
     public boolean updatePlaylistName(String playlistName, String name);

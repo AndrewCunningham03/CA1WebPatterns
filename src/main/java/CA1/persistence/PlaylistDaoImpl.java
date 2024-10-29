@@ -2,26 +2,30 @@ package CA1.persistence;
 
 
 import CA1.business.Playlist;
-import CA1.business.Song;
-import CA1.business.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
-    Scanner keyboard = new Scanner(System.in);
+
     public PlaylistDaoImpl(String databaseName){
         super(databaseName);
     }
 
+    public PlaylistDaoImpl(Connection conn){
+        super(conn);
+    }
     public PlaylistDaoImpl(){
         super();
     }
 
+    /**
+     * Gets all the playlists
+     * @return Arraylist of Playlists
+     */
+    @Override
     public ArrayList<Playlist> getAllPlaylists(){
             ArrayList<Playlist> playlists = new ArrayList<>();
 
@@ -49,6 +53,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
             return playlists;
         }
+
+    /**
+     * Returns the playlist with the playlist id that was given
+      * @param playlistID searching using this playlist id
+     * @return Playlist that matches the playlist id given
+     */
+    @Override
     public Playlist getPlaylistsByID(int playlistID){
         Playlist playlist = null;
 
@@ -77,6 +88,11 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
         return playlist;
     }
 
+    /**
+     * Gets the number of playlists
+     * @return number of playlists (integer)
+     */
+    @Override
     public int numberOfPlaylists(){
         ArrayList<Playlist> playlists = new ArrayList<>();
 
@@ -104,6 +120,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
         return playlists.size();
     }
+
+    /**
+     * Adds a new playlist to the database
+     * @param newPlaylist the playlist we will be adding
+     * @return true if it has been added or false if it has not been added
+     */
+    @Override
     public boolean insertNewPlaylists(Playlist newPlaylist){
         int rowsAffected = 0;
 
@@ -134,6 +157,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
 
     }
 
+    /**
+     * Renames a current playlistname to a new name
+     * @param playlistName the playlist name we will be renaming
+     * @param name new playlist name
+     * @return true if name was change or false if it wasn't changed
+     * @throws RuntimeException if multiple rows are unexpectedly affected by the update
+     */
     public boolean updatePlaylistName(String playlistName, String name) throws RuntimeException {
         int rowsAffected = 0;
 
@@ -161,6 +191,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             return true;
         }
     }
+
+    /**
+     * Maps the current row of the ResultSet to a Playlist object.
+     * @param rs the ResultSet to map from
+     * @return a Playlist object containing data from the current ResultSet row
+     * @throws SQLException if a database access error occurs
+     */
     private Playlist mapRow(ResultSet rs)throws SQLException{
 
         Playlist a = new Playlist(

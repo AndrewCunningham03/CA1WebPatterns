@@ -2,7 +2,10 @@ package CA1.business;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * @author Toby
+ * @author Andrew
+ */
 public class Playlist {
 
     private int playlistID;
