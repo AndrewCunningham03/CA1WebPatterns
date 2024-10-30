@@ -21,7 +21,7 @@ class ArtistDaoImplTest {
      */
     @Test
     void getAllArtist() {
-        System.out.println("Get all the artist");
+        System.out.println("Test for Get all the artist");
 
         ArtistDao artistDao = new ArtistDaoImpl("database_test.properties");
 

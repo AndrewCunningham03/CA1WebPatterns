@@ -116,7 +116,7 @@ class AlbumDaoImplTest {
     @Test
     void getAllAlbums() {
 
-        System.out.println("Get all the albums");
+        System.out.println("test for Get all the albums");
 
         AlbumDao albumDao = new AlbumDaoImpl("database_test.properties");
 
