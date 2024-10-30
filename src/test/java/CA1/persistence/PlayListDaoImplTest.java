@@ -94,14 +94,14 @@ public class PlayListDaoImplTest {
 
         PlaylistDao playlistDao = new PlaylistDaoImpl("database_test.properties");
 
-        // Expected list of playlists, populated with known values
+
         List<Playlist> expected = new ArrayList<>();
         expected.add(new Playlist(1, "Rap ", "toby b",true));
         expected.add(new Playlist(2, "best ", "sam b",false));
         expected.add(new Playlist(3, "Happy ", "John b",false));
         expected.add(new Playlist(4, "Rap ", "Andrew b",true));
         expected.add(new Playlist(5, "Rock ", "Toby b",true));
-        // Add more expected playlists as needed based on test data
+
 
         List<Playlist> result = playlistDao.getAllPlaylists();
 
@@ -120,13 +120,12 @@ public class PlayListDaoImplTest {
 
         PlaylistDao playlistDao = new PlaylistDaoImpl("database_test.properties");
 
-        // Expected list of playlists, populated with known values
         List<Playlist> expected = new ArrayList<>();
         expected.add(new Playlist(1, "Rap ", "toby b",true));
         expected.add(new Playlist(2, "best ", "sam b",false));
         expected.add(new Playlist(3, "Happy ", "John b",false));
         expected.add(new Playlist(4, "Rap ", "Andrew b",true));
-        // Add more expected playlists as needed based on test data
+
 
         List<Playlist> result = playlistDao.getAllPlaylists();
 
@@ -144,6 +143,8 @@ public class PlayListDaoImplTest {
     void insertNewPlaylists() throws SQLException {
         System.out.println("Test for successful insertion of a new playlist");
 
+
+
         Connection conn = connectionSource.getConnection();
         conn.setAutoCommit(false);
         PlaylistDao playlistDao = new PlaylistDaoImpl(conn);
@@ -159,6 +160,8 @@ public class PlayListDaoImplTest {
 
         Playlist playlist = playlistDao.getPlaylistsByID(6);
         assertEquals(playlist,newPlaylist);
+
+        conn.rollback();
     }
     /**
      * Insert new playlist that id is already taken
@@ -181,6 +184,7 @@ public class PlayListDaoImplTest {
 
         Playlist playlist = playlistDao.getPlaylistsByID(1);
         assertNotEquals(playlist,newPlaylist);
+        conn.rollback();
     }
     /**
      * Insert new playlist invalid input null
@@ -197,6 +201,7 @@ public class PlayListDaoImplTest {
         int result = playlistDao.insertNewPlaylists(newPlaylist);
 
         assertNotEquals(1,result);
+        conn.rollback();
     }
 
     /**
@@ -216,6 +221,7 @@ public class PlayListDaoImplTest {
         Playlist updatedPlaylist = playlistDao.getPlaylistsByID(1);
 
         assertEquals("testing", updatedPlaylist.getPlaylistName());
+        conn.rollback();
     }
 
 

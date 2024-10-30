@@ -36,6 +36,7 @@ public class PlayListSongDaoImplTest {
         ArrayList<PlaylistSong> listOfSongs = playlistSongDao.getPlaylistsByID(1);
         boolean resultTwo = listOfSongs.contains(newSong);
         assertTrue(resultTwo);
+        conn.rollback();
     }
     /**
      * Insert song into playlist that already exists
@@ -53,6 +54,7 @@ public class PlayListSongDaoImplTest {
         int result = playlistSongDao.addNewSongToPlaylist(newSong);
 
         assertNotEquals(1,result);
+        conn.rollback();
     }
     /**
      * Insert song into playlist that already exists
@@ -70,6 +72,7 @@ public class PlayListSongDaoImplTest {
         int result = playlistSongDao.addNewSongToPlaylist(newSong);
 
         assertNotEquals(1,result);
+        conn.rollback();
     }
 
     /**
@@ -90,6 +93,7 @@ public class PlayListSongDaoImplTest {
         assertEquals(1,result);
         ArrayList<PlaylistSong> songsInPlaylist = playlistSongDao.getPlaylistsByID(songToRemove.getPlaylistID());
         assertFalse(songsInPlaylist.contains(songToRemove));
+        conn.rollback();
     }
 
     /**
@@ -110,6 +114,7 @@ public class PlayListSongDaoImplTest {
         assertNotEquals(1,result);
         ArrayList<PlaylistSong> songsInPlaylist = playlistSongDao.getPlaylistsByID(songToRemove.getPlaylistID());
         assertFalse(songsInPlaylist.contains(songToRemove));
+        conn.rollback();
     }
 
     /**
@@ -139,6 +144,7 @@ public class PlayListSongDaoImplTest {
         for (int i = 0; i < expectedSongs.size(); i++) {
             assertEquals(expectedSongs.get(i), result.get(i));
         }
+        conn.rollback();
     }
 
     /**
@@ -163,6 +169,7 @@ public class PlayListSongDaoImplTest {
         for (int i = 0; i < expectedSongs.size(); i++) {
             assertEquals(expectedSongs.get(i), result.get(i), "Each song in the playlist should match expected values");
         }
+        conn.rollback();
     }
 
 
