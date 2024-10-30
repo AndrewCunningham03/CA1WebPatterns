@@ -135,13 +135,13 @@ public class App {
                             getSongByID(keyboard);
                             break;
                         case 7:
-                            getAllSongsInAlbum();
+                            getAllSongsInAlbum2();
                             break;
                         case 8:
                             getSongsByArtist();
                             break;
                         case 9:
-                            getAllSongsInAlbum2();
+                            getAllSongsInAlbum();
                             break;
                         case 10:
                             getSongByTitle(keyboard);
