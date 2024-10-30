@@ -145,7 +145,7 @@ public class App {
                             System.out.println("");
                             break;
                         case 10:
-                            System.out.println("");
+                            getSongByTitle(keyboard);
                             break;
                         case 11:
                             break;
@@ -304,6 +304,39 @@ public class App {
         }
 
 
+    }
+
+    private static void getSongByTitle(Scanner keyboard) {
+        SongDao songDao = new SongDaoImpl("database.properties");
+
+        Boolean repeat8 = false;
+
+        while(!repeat8) {
+
+
+                ArrayList<Song> song = songDao.getAllSongs();
+                System.out.println("Choose between these songTitles: ");
+
+                for (int i = 0;i < song.size();i++){
+                    System.out.println(song.get(i).getSongName());
+                }
+
+                String songTitle;
+                System.out.println("Enter song title: ");
+                songTitle = keyboard.nextLine();
+                System.out.println("");
+
+                for (int i = 0; i < song.size();i++){
+                    if (song.get(i).getSongName().equalsIgnoreCase(songTitle)){
+                        System.out.println(songDao.getSongByTitle(songTitle));
+                        repeat8 = true;
+                    }else{
+
+                    }
+                }
+
+
+        }
     }
 
     private static void LowestRatedSong() {

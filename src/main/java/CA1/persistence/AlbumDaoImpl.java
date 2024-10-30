@@ -73,7 +73,6 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumDao{
 
     }
 
-
     // getAlbumBasedOnAlbumID
 
     /**
