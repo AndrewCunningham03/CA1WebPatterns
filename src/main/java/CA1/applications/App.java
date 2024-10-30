@@ -132,17 +132,16 @@ public class App {
                             getAllAlbums();
                             break;
                         case 6:
-
                             getSongByID(keyboard);
                             break;
                         case 7:
-                            getAllSongsinAlbum();
+                            getAllSongsInAlbum();
                             break;
                         case 8:
                             getSongsByArtist();
                             break;
                         case 9:
-                            System.out.println("");
+                            getAllSongsInAlbum2();
                             break;
                         case 10:
                             getSongByTitle(keyboard);
@@ -1050,7 +1049,27 @@ public class App {
         }
 
     }
-    static void getAllSongsinAlbum(){
+    static void getAllSongsInAlbum2(){
+        SongDaoImpl songDao = new SongDaoImpl("Database.properties");
+        int albumID = 0;
+        try{
+            System.out.println("Enter album id you would like to search by");
+            albumID = keyboard.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println(LocalDateTime.now()+"Please enter a number"+e);
+        }
+        ArrayList<Song> songsByAlbum = songDao.getSongByAlbum(albumID);
+
+        if(songsByAlbum.isEmpty()){
+            System.out.println("No songs found for this album");
+        }
+
+        for (Song s: songsByAlbum){
+            System.out.println("Song: " +s.getSongName());
+        }
+
+    }
+    static void getAllSongsInAlbum(){
         SongDaoImpl songDao = new SongDaoImpl("Database.properties");
         int albumID = 0;
         try{
