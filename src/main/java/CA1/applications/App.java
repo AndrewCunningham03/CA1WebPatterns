@@ -202,7 +202,7 @@ public class App {
                             userRatingSong();
                             break;
                         case 2:
-                            selectSongToSeeRating(keyboard);
+                          //  selectSongToSeeRating(keyboard);
                             break;
                         case 3:
                             getTopRatedSong();
