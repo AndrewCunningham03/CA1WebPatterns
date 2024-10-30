@@ -37,6 +37,40 @@ public class PlayListSongDaoImplTest {
         boolean resultTwo = listOfSongs.contains(newSong);
         assertTrue(resultTwo);
     }
+    /**
+     * Insert song into playlist that already exists
+     * @throws SQLException will give you database error
+     */
+    @Test
+    void addNewSongToPlaylistAlreadyExists() throws SQLException {
+        System.out.println("Test for song that already exists");
+
+        Connection conn = connectionSource.getConnection();
+        conn.setAutoCommit(false);
+        PlaylistSongDao playlistSongDao = new PlaylistSongDaoImpl(conn);
+
+        PlaylistSong newSong = new PlaylistSong(1, 3);
+        int result = playlistSongDao.addNewSongToPlaylist(newSong);
+
+        assertNotEquals(1,result);
+    }
+    /**
+     * Insert song into playlist that already exists
+     * @throws SQLException will give you database error
+     */
+    @Test
+    void addNewSongToPlaylistSongDoesntExist() throws SQLException {
+        System.out.println("Test for song that doesnt exist");
+
+        Connection conn = connectionSource.getConnection();
+        conn.setAutoCommit(false);
+        PlaylistSongDao playlistSongDao = new PlaylistSongDaoImpl(conn);
+
+        PlaylistSong newSong = new PlaylistSong(1, 123);
+        int result = playlistSongDao.addNewSongToPlaylist(newSong);
+
+        assertNotEquals(1,result);
+    }
 
     /**
      * Removing successfully
@@ -90,8 +124,9 @@ public class PlayListSongDaoImplTest {
         expectedSongs.add(new PlaylistSong(1, 3));
         expectedSongs.add(new PlaylistSong(2, 5));
         expectedSongs.add(new PlaylistSong(3, 4));
+        expectedSongs.add(new PlaylistSong(4, 1));
         expectedSongs.add(new PlaylistSong(4, 2));
-        expectedSongs.add(new PlaylistSong(5, 1));
+        expectedSongs.add(new PlaylistSong(5,1));
 
         Connection conn = connectionSource.getConnection();
         conn.setAutoCommit(false);
