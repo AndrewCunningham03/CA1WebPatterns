@@ -157,7 +157,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
         // TRY to get a statement from the connection
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where artist = ?")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where artistID = ?")) {
 
             // Fill in the blanks, i.e. parameterize the query
             ps.setInt(1, artistID);
@@ -197,7 +197,7 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
         // TRY to get a statement from the connection
         // When you are parameterizing the query, remember that you need
         // to use the ? notation (so you can fill in the blanks later)
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where album = ?")) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM songs where albumID = ?")) {
 
             // Fill in the blanks, i.e. parameterize the query
             ps.setInt(1, albumID);

@@ -113,4 +113,137 @@ class SongDaoImplTest {
         assertNotEquals(expected.size(), result.size());
 
     }
+
+    /**
+     * Get all songs
+     */
+    @Test
+    void getAllSongs() {
+
+        System.out.println("test for getting all songs");
+
+        ArrayList<Song> expected = new ArrayList<>();
+        Time t1 = Time.valueOf("00:04:59");
+        expected.add(new Song(1,"Come on",1,1,t1));
+        Time t2 = Time.valueOf("00:04:34");
+        expected.add(new Song(2,"Wesleys Theory",5,2,t2));
+        Time t3 = Time.valueOf("00:02:23");
+        expected.add(new Song(3,"Meh",4,3,t3));
+        Time t4 = Time.valueOf("00:03:32");
+        expected.add(new Song(4,"Housequake",2,5,t4));
+        Time t5 = Time.valueOf("00:05:23");
+        expected.add(new Song(5,"A.D.2000",3,4,t5));
+
+
+        SongDao songDao = new SongDaoImpl("database_test.properties");
+
+        ArrayList<Song> result = songDao.getAllSongs();
+
+        /// checking arraylist are the same
+
+        for (int i = 0; i < expected.size();i++){
+
+            assertEquals(expected.get(i), result.get(i));
+        }
+
+
+        // checking size is the same
+
+        assertEquals(expected.size(), result.size());
+
+    }
+
+    /**
+     * Test for retrieving all songs by a specific artist.
+     */
+    @Test
+    void getSongByArtist() {
+        System.out.println("Test for getting songs by a specific artist ID");
+
+        ArrayList<Song> expected = new ArrayList<>();
+
+        Time t1 = Time.valueOf("00:04:59");
+        expected.add(new Song(1,"Come on",1,1,t1));
+
+
+        SongDao songDao = new SongDaoImpl("database_test.properties");
+        ArrayList<Song> result = songDao.getSongByArtist(1);
+
+        /// checking arraylist are the same
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), result.get(i));
+        }
+
+        // checking size is the same
+        assertEquals(expected.size(), result.size());
+    }
+    /**
+     * Test for retrieving all songs by a specific artist that doesn't exist.
+     */
+    @Test
+    void getSongByArtistDoesntExist() {
+        System.out.println("Test for getting songs by a specific artist ID that doesn't exist");
+
+        ArrayList<Song> expected = new ArrayList<>();
+
+
+        SongDao songDao = new SongDaoImpl("database_test.properties");
+        ArrayList<Song> result = songDao.getSongByArtist(123);
+
+        /// checking arraylist are the same
+        for (int i = 0; i < result.size(); i++) {
+            assertEquals(expected.get(i), result.get(i));
+        }
+
+        // checking size is the same
+        assertEquals(expected.size(), result.size());
+    }
+
+    /**
+     * Test for retrieving all songs by a specific album.
+     */
+    @Test
+    void getSongByAlbum() {
+        System.out.println("Test for getting songs by a specific album ID");
+
+        ArrayList<Song> expected = new ArrayList<>();
+
+        Time t1 = Time.valueOf("00:04:59");
+        expected.add(new Song(1,"Come on",1,1,t1));
+
+
+        SongDao songDao = new SongDaoImpl("database_test.properties");
+        ArrayList<Song> result = songDao.getSongByAlbum(1);
+
+        /// checking arraylist are the same
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), result.get(i));
+        }
+
+        // checking size is the same
+        assertEquals(expected.size(), result.size());
+    }
+
+    /**
+     * Test for retrieving all songs by a specific album that doesn't exist.
+     */
+    @Test
+    void getSongByAlbumDoesntExist() {
+        System.out.println("Test for getting songs by a specific album ID that doesn't exist");
+
+        ArrayList<Song> expected = new ArrayList<>();
+
+
+        SongDao songDao = new SongDaoImpl("database_test.properties");
+        ArrayList<Song> result = songDao.getSongByAlbum(123);
+
+        /// checking arraylist are the same
+        for (int i = 0; i < result.size(); i++) {
+            assertEquals(expected.get(i), result.get(i));
+        }
+
+        // checking size is the same
+        assertEquals(expected.size(), result.size());
+    }
+
 }
