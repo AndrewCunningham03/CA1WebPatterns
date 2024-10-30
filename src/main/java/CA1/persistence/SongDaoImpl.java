@@ -227,7 +227,6 @@ public class SongDaoImpl extends MySQLDao implements SongDao{
         return song;
     }
 
-
     /**
      * Search through each row in the song
      * @param rs is the song query being searched
