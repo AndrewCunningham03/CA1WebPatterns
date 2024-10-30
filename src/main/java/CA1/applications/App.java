@@ -1026,13 +1026,13 @@ public class App {
         }catch(InputMismatchException e){
             System.out.println(LocalDateTime.now()+"Please enter a number"+e);
         }
-        ArrayList<Song> songsByArtist = songDao.getSongByAlbum(albumID);
+        ArrayList<Song> songsByAlbum = songDao.getSongByAlbum(albumID);
 
-        if(songsByArtist.isEmpty()){
+        if(songsByAlbum.isEmpty()){
             System.out.println("No songs found for this album");
         }
 
-        for (Song s: songsByArtist){
+        for (Song s: songsByAlbum){
             System.out.println("Song: " +s);
         }
 
