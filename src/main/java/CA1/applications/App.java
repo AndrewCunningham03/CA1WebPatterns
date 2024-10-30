@@ -879,8 +879,8 @@ public class App {
 
         PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
 
-        boolean done = playlistSongDao1.removingSongFromPlayList(playlistSong);
-        if(done){
+        int done = playlistSongDao1.removingSongFromPlayList(playlistSong);
+        if(done>0){
             System.out.println("SongId: "+songID+" has been removed from playlistID: "+ playlistID);
         }else{
             System.out.println("Song has not been removed please try again later.");
@@ -947,8 +947,8 @@ public class App {
 
         PlaylistSong playlistSong = new PlaylistSong(playlistID,songID);
 
-        boolean done = playlistSongDao1.addNewSongToPlaylist(playlistSong);
-        if(done){
+        int done = playlistSongDao1.addNewSongToPlaylist(playlistSong);
+        if(done>0){
             System.out.println("SongId: "+songID+" has been add to playlistID: "+ playlistID);
         }else{
             System.out.println("Song has not been added. Try again later");
@@ -974,9 +974,9 @@ public class App {
 
         Playlist playlist = new Playlist(ID,playlistName,userName,status);
 
-        boolean complete = playlistDao1.insertNewPlaylists(playlist);
+        int complete = playlistDao1.insertNewPlaylists(playlist);
 
-        if(!complete){
+        if(complete<=0){
             System.out.println("Playlist couldn't be created please try again");
         }else{
             System.out.println("Playlist couldnt be created please try again");
@@ -1009,8 +1009,8 @@ public class App {
         }
         System.out.println("Enter the new name you would like to call it");
         String newName = keyboard.next();
-        boolean done = playlistDao1.updatePlaylistName(playlistname,newName);
-        if(done){
+        int done = playlistDao1.updatePlaylistName(playlistname,newName);
+        if(done>0){
             System.out.println("Playlist name has been change to "+newName);
         }else{
             System.out.println("Playlist name couldnt be changed. Please try again later");

@@ -127,7 +127,7 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
      * @return true if it has been added or false if it has not been added
      */
     @Override
-    public boolean insertNewPlaylists(Playlist newPlaylist){
+    public int insertNewPlaylists(Playlist newPlaylist){
         int rowsAffected = 0;
 
         Connection conn = super.getConnection();
@@ -138,22 +138,19 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             ps.setString(3, newPlaylist.getUsername());
             ps.setBoolean(4,newPlaylist.isStatusPrivate());
             rowsAffected = ps.executeUpdate();
-        }
-        catch(SQLException e){
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
             System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return rowsAffected;
 
     }
 
@@ -164,7 +161,7 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
      * @return true if name was change or false if it wasn't changed
      * @throws RuntimeException if multiple rows are unexpectedly affected by the update
      */
-    public boolean updatePlaylistName(String playlistName, String name) throws RuntimeException {
+    public int updatePlaylistName(String playlistName, String name) throws RuntimeException {
         int rowsAffected = 0;
 
         Connection conn = super.getConnection();
@@ -174,22 +171,19 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao{
             ps.setString(2, playlistName);
 
             rowsAffected = ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(LocalDateTime.now() + ": An SQLException  occurred while preparing the SQL " +
-                    "statement.");
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
+            System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return rowsAffected;
     }
 
     /**

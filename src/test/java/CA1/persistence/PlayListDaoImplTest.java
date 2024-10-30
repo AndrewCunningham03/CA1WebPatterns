@@ -180,9 +180,9 @@ public class PlayListDaoImplTest {
         PlaylistDao playlistDao = new PlaylistDaoImpl(conn);
 
         Playlist newPlaylist = new Playlist(6, "Jazz Vibes", "andrew", true);
-        boolean result = playlistDao.insertNewPlaylists(newPlaylist);
+        int result = playlistDao.insertNewPlaylists(newPlaylist);
 
-        assertTrue(result);
+        assertEquals(1,result);
 
         int numberOfPlaylists = playlistDao.numberOfPlaylists();
 
@@ -203,9 +203,9 @@ public class PlayListDaoImplTest {
         PlaylistDao playlistDao = new PlaylistDaoImpl(conn);
 
         Playlist newPlaylist = new Playlist(1, "Jazz Vibes", "andrew", true);
-        boolean result = playlistDao.insertNewPlaylists(newPlaylist);
+        int result = playlistDao.insertNewPlaylists(newPlaylist);
 
-        assertFalse(result);
+        assertNotEquals(1,result);
         int numberOfPlaylists = playlistDao.numberOfPlaylists();
 
         assertNotEquals(newPlaylist.getPlaylistID(),numberOfPlaylists);
@@ -225,9 +225,9 @@ public class PlayListDaoImplTest {
         PlaylistDao playlistDao = new PlaylistDaoImpl(conn);
 
         Playlist newPlaylist = new Playlist(1, null, "andrew", true);
-        boolean result = playlistDao.insertNewPlaylists(newPlaylist);
+        int result = playlistDao.insertNewPlaylists(newPlaylist);
 
-        assertFalse(result);
+        assertNotEquals(1,result);
     }
 
     /**
@@ -241,8 +241,8 @@ public class PlayListDaoImplTest {
         conn.setAutoCommit(false);
         PlaylistDao playlistDao = new PlaylistDaoImpl(conn);
 
-        boolean result = playlistDao.updatePlaylistName("Rap Cavier", "testing");
-        assertTrue(result);
+        int result = playlistDao.updatePlaylistName("Rap Cavier", "testing");
+        assertEquals(1,result);
 
         Playlist updatedPlaylist = playlistDao.getPlaylistsByID(1);
 

@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public interface PlaylistSongDao {
 
-    public boolean addNewSongToPlaylist(PlaylistSong song);
-    public boolean removingSongFromPlayList(PlaylistSong song);
+    public int addNewSongToPlaylist(PlaylistSong song);
+    public int removingSongFromPlayList(PlaylistSong song);
     public ArrayList<PlaylistSong> getPlaylistsByID(int playlistID);
     public ArrayList<PlaylistSong> getAllPlaylistSongs();
 

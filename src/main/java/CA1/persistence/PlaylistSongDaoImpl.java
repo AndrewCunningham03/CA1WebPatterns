@@ -7,10 +7,7 @@ import CA1.business.Song;
 import CA1.business.User;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -33,7 +30,7 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
      * @return true if it has been added, false if it hasn't been added.
      */
     @Override
-    public boolean addNewSongToPlaylist(PlaylistSong song){
+    public int addNewSongToPlaylist(PlaylistSong song){
         int rowsAffected = 0;
 
         Connection conn = super.getConnection();
@@ -42,22 +39,19 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
             ps.setInt(1,song.getPlaylistID());
             ps.setInt(2,song.getSongID());
             rowsAffected = ps.executeUpdate();
-        }
-        catch(SQLException e){
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
             System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return rowsAffected;
 
     }
 
@@ -67,7 +61,7 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
      * @return true if it has been removed, false if it hasn't been removed
      */
     @Override
-    public boolean removingSongFromPlayList(PlaylistSong playlistSong){
+    public int removingSongFromPlayList(PlaylistSong playlistSong){
         int rowsAffected = 0;
 
         Connection conn = super.getConnection();
@@ -76,22 +70,19 @@ public class PlaylistSongDaoImpl extends MySQLDao implements PlaylistSongDao{
             ps.setInt(1,playlistSong.getPlaylistID());
             ps.setInt(2,playlistSong.getSongID());
             rowsAffected = ps.executeUpdate();
-        }
-        catch(SQLException e){
+        }// Add an extra exception handling block for where there is already an entry
+        // with the primary key specified
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Constraint Exception occurred: " + e.getMessage());
+            // Set the rowsAffected to -1, this can be used as a flag for the display section
+            rowsAffected = -1;
+        }catch(SQLException e){
             System.out.println("SQL Exception occurred when attempting to prepare/execute SQL");
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
 
-        if(rowsAffected > 1){
-            throw new RuntimeException(LocalDateTime.now() + " ERROR: Multiple rows affected on primary key selection" +
-                    ".");
-        }
-        else if(rowsAffected == 0){
-            return false;
-        }else{
-            return true;
-        }
+        return rowsAffected;
 
     }
 
