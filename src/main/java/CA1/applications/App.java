@@ -136,13 +136,13 @@ public class App {
                             getSongByID(keyboard);
                             break;
                         case 7:
-                            System.out.println("");
+                            getAllSongsinAlbum();
                             break;
                         case 8:
                             getSongsByArtist();
                             break;
                         case 9:
-                            getSongsByAlbum();
+                            System.out.println("");
                             break;
                         case 10:
                             System.out.println("");
@@ -1017,7 +1017,7 @@ public class App {
         }
 
     }
-    static void getSongsByAlbum(){
+    static void getAllSongsinAlbum(){
         SongDaoImpl songDao = new SongDaoImpl("Database.properties");
         int albumID = 0;
         try{
